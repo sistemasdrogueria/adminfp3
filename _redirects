@@ -1,5 +1,5 @@
   from = "/api/*"
-  to = "https://mernbackend-gg7o.onrender.com/api/:slug"
+  to = "https://drogueriasur.com.ar/fp-api-laravel/api/:slug"
   status = 200
 
 
