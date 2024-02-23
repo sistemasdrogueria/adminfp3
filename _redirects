@@ -1,0 +1,8 @@
+  from = "/api/*"
+  to = "https://mernbackend-gg7o.onrender.com/api/:slug"
+  status = 200
+
+
+  from = "/*"
+  to = "/index.html"
+  status = 200
