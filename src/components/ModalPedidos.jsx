@@ -17,7 +17,13 @@ export default function ModalPedidos() {
     async function enviarSolicitud() {
       try {
         const ids = { ids: idsArticulosInOrders };
-        const respuesta = await clienteAxios.post("api/articulosAdmin", ids);
+            const token = localStorage.getItem('AUTH_TOKEN')
+        const respuesta = await clienteAxios.post("api/articulosAdmin", ids,
+{
+    headers:{
+        Authorization:`Bearer ${token}`
+    }
+});
 
         // Filtrar los elementos de items que coinciden con los IDs de la respuesta
         const articulosFiltrados = items.filter((pedidoItem) =>
