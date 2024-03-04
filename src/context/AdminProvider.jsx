@@ -15,6 +15,10 @@ const [activeLink, setActiveLink] = useState(`${window.location.pathname}`);
 const [farmaciasEdit,setFarmaciasEdit] = useState([]);
 const [modal, setModal] = useState(false);
 const [modalFarmacias, setmodalFarmacias] = useState(false);
+const [modalPedidosUsers, setModalPedidosUsers] = useState(false);
+const [pedidosUsers, setPedidosUsers] = useState([]);
+const [pedidosUsersView,setPedidosUserView] = useState([]);
+const [idsArticulosInOrders, setIdsArticulosInOrders] = useState([]);
 
 
 const handleClickModal = () => {
@@ -29,11 +33,21 @@ setmodalFarmacias(!modalFarmacias)
 
 }
 
+const handleClickModalPedidosUsers= () => {
+  setModalPedidosUsers(!modalPedidosUsers)
+
+
+}
+const handleSetPedidosUsers= pedidosUsersView => {
+
+  setPedidosUserView(pedidosUsersView)
+}
 
 const handleSetUser = usersEdit => {
 setUsersEdit(usersEdit)
 
 }
+
 
 const handleSetFarmacias = farmaciasEdit => {
 setFarmaciasEdit(farmaciasEdit)
@@ -43,7 +57,12 @@ const handleDeleteUser = (id) => {
   deleteUser(id);
   // Actualizar la interfaz de usuario si es necesario
 }
+ const handleSetArticulosInOrders= idsArticulosInOrders=> {
+  const ids =JSON.parse(idsArticulosInOrders).map(item => item.articulo_id);
+  setIdsArticulosInOrders(ids)
 
+ }
+ 
 
 return (
 <AdminContext.Provider
@@ -61,7 +80,16 @@ value={{
     handleSetFarmacias,
     setActiveLink,
     setUsers,
-    setFarmacias
+    setFarmacias,
+    handleClickModalPedidosUsers,
+    modalPedidosUsers,
+    handleSetPedidosUsers,
+    setPedidosUserView,
+    pedidosUsersView,
+    idsArticulosInOrders,
+    handleSetArticulosInOrders
+    
+
 }}
 >{children}</AdminContext.Provider>
 

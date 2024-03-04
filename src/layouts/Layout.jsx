@@ -6,6 +6,7 @@ import Resumen from "../components/Resumen";
 import useAdmin from "../hooks/useAdmin";
 import ModalUsers from "../components/ModalUsers";
 import ModalFarmacias from "../components/ModalFarmacias";
+import ModalPedidos from "../components/ModalPedidos";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../hooks/useAuth";
 
@@ -21,7 +22,7 @@ const customStyles = {
 }
 Modal.setAppElement('#root');
 export default function Layout() {
-    const{modal,handleClickModal,modalFarmacias} = useAdmin();
+    const{modal,handleClickModal,modalFarmacias,modalPedidosUsers} = useAdmin();
     const{user,error } = useAuth({middleware:'auth'});
   return (
     <>
@@ -33,10 +34,9 @@ export default function Layout() {
         </main>
     </div>
    
-        <Modal isOpen={modal ?modal : modalFarmacias} style={customStyles}> 
-        {modal ? <ModalUsers/> :  <ModalFarmacias />}
-
-        </Modal>
+        <Modal isOpen={modal ? modal : (modalFarmacias || modalPedidosUsers)} style={customStyles}>
+  {modal ? <ModalUsers /> : (modalFarmacias ? <ModalFarmacias /> : <ModalPedidos />)}
+</Modal>
         <ToastContainer/>
 
     </>
