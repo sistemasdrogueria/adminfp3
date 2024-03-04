@@ -1,10 +1,9 @@
 export default function CardItem(items) {
-
-console.log(items)
   return (
-      <div class="w-full sm:w-1/2 lg:w-1/3 p-4">
-        <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-          <div class="md:flex">
+      <div className="w-1/2 p-4">
+        <div className="max-w-md mx-auto border bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+          <div className="inline-flex flex-col">
+            
     <div className="md:flex-shrink-0">
  <img src={`https://www.drogueriasur.com.ar/ds/img/productos/${items.items.articulo.imagen}`} alt={`Imagen producto ${items.items.articulo.descripcion_pag}`}  />
     </div> 

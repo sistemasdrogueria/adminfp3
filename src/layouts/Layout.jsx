@@ -11,13 +11,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../hooks/useAuth";
 
 const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
+   content: {
+    position: 'absolute',
+    inset: '50% auto auto 50%',
+    border: '1px solid rgb(204, 204, 204)',
+    background: 'rgb(255, 255, 255)',
+    overflow: 'auto',
+    borderRadius: '4px',
+    outline: 'none',
+    padding: '20px',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
   },
 }
 Modal.setAppElement('#root');
@@ -34,7 +38,7 @@ export default function Layout() {
         </main>
     </div>
    
-        <Modal isOpen={modal ? modal : (modalFarmacias || modalPedidosUsers)} style={customStyles}>
+        <Modal isOpen={modal ? modal : (modalFarmacias || modalPedidosUsers)} >
   {modal ? <ModalUsers /> : (modalFarmacias ? <ModalFarmacias /> : <ModalPedidos />)}
 </Modal>
         <ToastContainer/>

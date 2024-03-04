@@ -3,7 +3,7 @@ export default function PedidosCard({pedidos}) {
 const {handleClickModalPedidosUsers,handleSetPedidosUsers,handleSetArticulosInOrders,} = useAdmin();
   return (
    <div className="w-full sm:w-1/2 lg:w-1/3 p-4">
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+        <div className="max-w-md mx-auto border bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
           <div className="md:flex">
             <div className="md:flex-shrink-0">
              
