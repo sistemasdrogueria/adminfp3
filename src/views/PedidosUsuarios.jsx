@@ -5,14 +5,18 @@ import clienteAxios from '../config/axios'
 import PedidosCard from '../components/PedidosCard';
 
 export default function PedidosUsuarios() {
-
+const token = localStorage.getItem('AUTH_TOKEN')
    const {} = useAdmin();
-     const fetcher = () => clienteAxios('/api/pedidosAdmin').then(data => data.data);
+     const fetcher = () => clienteAxios('/api/pedidosAdmin',
+{
+    headers:{
+        Authorization:`Bearer ${token}`
+    }
+}).then(data => data.data);
   
   const { data, error, isLoading } = useSWR('/api/pedidosAdmin', fetcher)
   if(isLoading) return 'Cargando...';
       const pedidosUsers =data.data ;
-      console.log(data.data);
   return (
     <div>
       <h1 className="text-4xl font-black text-center">Pedidos Usuarios </h1>

@@ -8,7 +8,13 @@ import clienteAxios from "../config/axios";
 
 export default function FarmaciasAdmin() {
     const {} = useAdmin();
-     const fetcher = () => clienteAxios('/api/farmaciasAdmin').then(data => data.data);
+    const token = localStorage.getItem('AUTH_TOKEN')
+     const fetcher = () => clienteAxios('/api/farmaciasAdmin',
+{
+    headers:{
+        Authorization:`Bearer ${token}`
+    }
+}).then(data => data.data);
   
   const { data, error, isLoading } = useSWR('/api/farmaciasAdmin', fetcher)
   if(isLoading) return 'Cargando...';

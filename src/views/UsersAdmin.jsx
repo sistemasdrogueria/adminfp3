@@ -7,7 +7,13 @@ import clienteAxios from "../config/axios";
 
 export default function UsersAdmin() {
  const {} = useAdmin();
-  const fetcher = () => clienteAxios('/api/usersAdmin').then(data => data.data);
+ const token = localStorage.getItem('AUTH_TOKEN')
+  const fetcher = () => clienteAxios('/api/usersAdmin',
+{
+    headers:{
+        Authorization:`Bearer ${token}`
+    }
+}).then(data => data.data);
   
   const { data, error, isLoading } = useSWR('/api/usersAdmin', fetcher)
   if(isLoading) return 'Cargando...';
