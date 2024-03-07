@@ -16,9 +16,13 @@ const [farmaciasEdit,setFarmaciasEdit] = useState([]);
 const [modal, setModal] = useState(false);
 const [modalFarmacias, setmodalFarmacias] = useState(false);
 const [modalPedidosUsers, setModalPedidosUsers] = useState(false);
+const [modalOrdersMod,setModalOrdersMod]= useState(false);
 const [pedidosUsers, setPedidosUsers] = useState([]);
 const [pedidosUsersView,setPedidosUserView] = useState([]);
 const [idsArticulosInOrders, setIdsArticulosInOrders] = useState([]);
+const [itemsUsers, setItemsUsers] = useState([]);
+const [articulos, setArticulos] = useState([]);
+
 
 
 const handleClickModal = () => {
@@ -37,6 +41,10 @@ const handleClickModalPedidosUsers= () => {
   setModalPedidosUsers(!modalPedidosUsers)
 
 
+}
+const hanldeClickModalOrderMod = () => {
+
+setModalOrdersMod(!modalOrdersMod)
 }
 const handleSetPedidosUsers= pedidosUsersView => {
 
@@ -57,12 +65,36 @@ const handleDeleteUser = (id) => {
   deleteUser(id);
   // Actualizar la interfaz de usuario si es necesario
 }
+
+const handleSetItemsUsers = itemsUsers=> {
+  setItemsUsers(itemsUsers)
+}
+
  const handleSetArticulosInOrders= idsArticulosInOrders=> {
   const ids =JSON.parse(idsArticulosInOrders).map(item => item.articulo_id);
   setIdsArticulosInOrders(ids)
 
  }
- 
+
+ const handleEliminarProductoPedido = async (id,items) => {
+
+
+      try {
+            const token = localStorage.getItem('AUTH_TOKEN')
+        const respuesta = await clienteAxios.post("/api/adminPharmacies/orders/deleteitem", {id,items},
+{
+    headers:{
+        Authorization:`Bearer ${token}`
+    }
+});
+console.log(respuesta);
+      
+      } catch (error) {
+        console.error("Error al enviar la solicitud:", error);
+      }
+  
+ }
+
 
 return (
 <AdminContext.Provider
@@ -87,7 +119,15 @@ value={{
     setPedidosUserView,
     pedidosUsersView,
     idsArticulosInOrders,
-    handleSetArticulosInOrders
+    handleSetArticulosInOrders,
+    modalOrdersMod,
+    hanldeClickModalOrderMod,
+    handleEliminarProductoPedido,
+    itemsUsers,
+    setItemsUsers,
+    handleSetItemsUsers,
+    articulos,
+    setArticulos
     
 
 }}

@@ -69,6 +69,16 @@ useEffect(()=> {
 
         navigate(url)
     }
+
+     if(middleware=== 'guest'&& user && parseInt(user.type_id)===3){
+        console.log(user.type_id);
+              navigate('/admin/farmacia')
+     }
+
+     if(middleware=== 'admin'&& user && parseInt(user.type_id)!==3){
+              navigate('/')
+     }
+     
     if(middleware ==='auth' && error){
         navigate('/auth/login')
     }
@@ -79,5 +89,5 @@ return {
     logout,
     user,error
 }
-
+console.log(user)
 }

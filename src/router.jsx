@@ -7,6 +7,10 @@ import UsersAdmin from "./views/UsersAdmin";
 import FarmaciasAdmin from "./views/FarmaciasAdmin";
 import PedidosDrogueria from "./views/PedidosDrogueria";
 import PedidosUsuarios from "./views/PedidosUsuarios";
+import AdminFarmaciaLayout from "./layouts/AdminFarmaciaLayout";
+import OrdersUsers from "./views/OrdersUsers";
+import OrdersDrogueria from "./views/OrdersDrogueria";
+
 
 const router = createBrowserRouter([
   {
@@ -71,6 +75,26 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/admin/farmacia",
+    element: <AdminFarmaciaLayout/>,
+    children: [
+         {
+        index: true,
+        element:<OrdersUsers/>
+      },
+      {
+        path: '/admin/farmacia/ordersUsers',
+        element:<OrdersUsers/>
+      },
+
+      {
+         path: '/admin/farmacia/ordersDrogueria',
+        element:<OrdersDrogueria/>
+      },
+    ],
+  },
+  
 ]);
 
 export default router;
