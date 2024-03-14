@@ -31,10 +31,10 @@ const AdminProvider = ({ children }) => {
         setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 8));
         break;
       case 'verde':
-        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 1));
+        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 2));
         break;
       case 'naranja':
-        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 2));
+        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 1));
         break;
       default:
         setPedidosFiltrados(pedidosUsers);
@@ -169,7 +169,9 @@ const AdminProvider = ({ children }) => {
           },
         }
       );
-      console.log(response.data);
+        
+    handleClickModalOrderDrogMod(!modalOrdersDrogMod);
+      toast.success("Pedido solicitado.");
     } catch (error) {
       console.error("Error fetching search results:", error);
     }

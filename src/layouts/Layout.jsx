@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet,useNavigate  } from "react-router-dom";
 import Modal from "react-modal";
 import { ToastContainer } from "react-toastify";
 import Sidebar from "../components/Sidebar";
@@ -9,6 +9,7 @@ import ModalFarmacias from "../components/ModalFarmacias";
 import ModalPedidos from "../components/ModalPedidos";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
 
 const customStyles = {
    content: {
@@ -28,6 +29,12 @@ Modal.setAppElement('#root');
 export default function Layout() {
     const{modal,handleClickModal,modalFarmacias,modalPedidosUsers} = useAdmin();
     const{user,error } = useAuth({middleware:'auth'});
+    const navigate = useNavigate();
+       useEffect(() => {
+        if (user && parseInt(user.type_id) !== 1) {
+            navigate('/admin/farmacia');
+        }
+    }, [user, navigate]);
   return (
     <>
     <div className="md:flex ">

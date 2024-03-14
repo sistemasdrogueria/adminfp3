@@ -9,7 +9,7 @@ import ModalOrdersDrogMod from '../components/ModalOrdersDrogMod';
 
 export default function AdminFarmaciaLayout() {
   const {modalOrdersMod, modalOrdersDrogMod }= useAdmin();
-      useAuth({middleware:'admin'});
+      useAuth({middleware:'adminfarmacia'});
   return (
     <>
        <div className="md:flex ">

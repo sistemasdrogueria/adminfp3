@@ -13,8 +13,18 @@ import OrdersDrogueria from "./views/OrdersDrogueria";
 
 
 const router = createBrowserRouter([
-  {
+    {
     path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
+        index: true,
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
     element: <Layout />,
     children: [
       {
