@@ -4,20 +4,15 @@ import clienteAxios from "../config/axios";
 import CardFarmItem from "./CardFarmItem";
 import ResultQuery from "./ResultQuery";
 import { toast } from "react-toastify";
-
-
-
-export default function ModalOrdersMod() {
+export default function ModalOrdersDrogMod() {
      const {
-    handleClickModalOrderMod,
     pedidosUsersView,
     idsArticulosInOrders,
     articulos,setArticulos,
-   pedidosUsersMod,handleSetPedidosUsersMod,
-   handleAddProductoPedido,
+   handleClickModalOrderDrogMod,
    itemsMod,
    setItemsMod,
-   handleClickSavePedido
+   handleClickSavePedidoDrog
 
   } = useAdmin();
 
@@ -28,7 +23,21 @@ export default function ModalOrdersMod() {
   const [items,setItems] = useState(item);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]); 
+  const [totalCantidad, setTotalCantidad] =useState(0);
 
+   useEffect(() => {
+    // Parsear los items del objeto pedidosUsersView
+    const items = JSON.parse(pedidosUsersView.items);
+
+    // Calcular la suma de cantidades
+    let sum = 0;
+    items.forEach(item => {
+      sum += item.cantidad;
+    });
+
+    // Actualizar el estado con la suma de cantidades
+    setTotalCantidad(sum);
+  }, [pedidosUsersView.items]);
 
 useEffect(() => {
   async function enviarSolicitud() {
@@ -75,18 +84,18 @@ const handleDeleteItem = (articulo_id) => {
     setItemsMod(ItemsActualizado)
 };
 
-const handleAddProducto = (productoData,productoDataArt )=> {
+const handleAddDrogProducto = (productoData,productoDataArt )=> {
 
  if (articulos.some((articulosState) => articulosState.articulo_id === productoDataArt.articulo_id)) {
 
 toast.success("El producto ya fué agregado.")
 
  }else{
-  
+ 
 setItemsMod([...itemsMod,productoData])
 setItems([...items,productoData])
 setArticulos([...articulos,productoDataArt])
-handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
+
 
  }
 
@@ -114,7 +123,7 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
     <div>
     <div className="md:w-full  ">
     <div className="flex justify-end">
-      <button onClick={handleClickModalOrderMod}>
+      <button onClick={handleClickModalOrderDrogMod}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -159,7 +168,7 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
     
     <div className="container overflow-y-scroll" style={{ maxHeight: '600px',maxWidth: '600px', margin: '0 auto' }}>
      {results.map((result) => (
-            <ResultQuery key={result.id} articulo={result} articulo_id={result.id} handleAddProducto={handleAddProducto}users={true}/>
+            <ResultQuery key={result.id} articulo={result} articulo_id={result.id} handleAddProducto={handleAddDrogProducto} users={false}/>
           ))}
    
     </div>
@@ -168,14 +177,15 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
       </div>
        <div  className="w-1/3  bg-gray-100 border  overflow-y-scroll">
         <div className="h-1/6 bg-white ">
-          <h3 className="text-2xl font-black  text-center">Carrito Cliente</h3>
-          
-          
+          <h3 className="text-2xl font-black  text-center">Carrito para Drogueria</h3>
+            <p className="ms-4">Codigo drogueria : Codigo</p>
+            <p className="ms-4">{`Items/cant : ${JSON.parse(pedidosUsersView.items).length}/${totalCantidad}`}</p>
+          <p className="font-black text-md mt-1 text-center"> Los precios no tienen el iva agregado.</p>
         </div>
 
          <div className=" justify-center  ">
           {articulos.map((pedidoItem) => (
-            <CardFarmItem key={pedidoItem.articulo_id} items={pedidoItem} pedidoid={pedidosUsersView.id}handleDeleteItem={handleDeleteItem} originalItems={JSON.parse(pedidosUsersView.items)} users={true}/>
+            <CardFarmItem key={pedidoItem.articulo_id} items={pedidoItem} pedidoid={pedidosUsersView.id}handleDeleteItem={handleDeleteItem} originalItems={JSON.parse(pedidosUsersView.items)} users={false}/>
           ))}
         </div>
        
@@ -187,9 +197,9 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
 
     </div>
     <div className="w-full flex justify-center">
-<button onClick={handleClickSavePedido}
- type="button" className="m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido Usuario</button>
-<button type="button" className="m-4 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancelar Pedido</button>
+<button onClick={handleClickSavePedidoDrog}
+ type="button" className="m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido Drogueria</button>
+<button type="button" className="m-4 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancelar Pedido Drogueria</button>
 
     </div>
     </div>

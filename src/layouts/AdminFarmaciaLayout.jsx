@@ -5,9 +5,10 @@ import Modal from "react-modal";
 import { ToastContainer } from "react-toastify";
 import useAdmin from '../hooks/useAdmin';
 import ModalOrdersMod from '../components/ModalOrdersMod';
+import ModalOrdersDrogMod from '../components/ModalOrdersDrogMod';
 
 export default function AdminFarmaciaLayout() {
-  const {modalOrdersMod}= useAdmin();
+  const {modalOrdersMod, modalOrdersDrogMod }= useAdmin();
       useAuth({middleware:'admin'});
   return (
     <>
@@ -18,8 +19,8 @@ export default function AdminFarmaciaLayout() {
           <Outlet />
         </main>
     </div>
-    <Modal isOpen={modalOrdersMod}>
-  {modalOrdersMod ? <ModalOrdersMod />: null}
+    <Modal isOpen={modalOrdersMod? modalOrdersMod: modalOrdersDrogMod}>
+  {modalOrdersMod ? <ModalOrdersMod />: (modalOrdersDrogMod ? <ModalOrdersDrogMod />: null)}
     </Modal>
             <ToastContainer/>
         </>  

@@ -65,19 +65,21 @@ try {
 
 useEffect(()=> {
     
-    if(middleware=== 'guest'&& url && user){
-
-        navigate(url)
-    }
-
+ 
      if(middleware=== 'guest'&& user && parseInt(user.type_id)===3){
         console.log(user.type_id);
               navigate('/admin/farmacia')
      }
 
+
      if(middleware=== 'admin'&& user && parseInt(user.type_id)!==3){
               navigate('/')
      }
+        if(middleware=== 'guest'&& url && user){
+
+        navigate(url)
+    }
+
      
     if(middleware ==='auth' && error){
         navigate('/auth/login')

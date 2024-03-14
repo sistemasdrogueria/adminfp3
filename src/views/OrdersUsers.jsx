@@ -1,10 +1,12 @@
+
 import useSWR from "swr";
 import clienteAxios from "../config/axios";
 import useAdmin    from "../hooks/useAdmin";
 import PedidosCardMod from "../components/PedidosCardMod";
+import Filtro from "../components/Filtro";
 
 export default function OrdersUsers() {const token = localStorage.getItem('AUTH_TOKEN')
-   const {} = useAdmin();
+   const {pedidosFiltrados,setPedidosFiltrados} = useAdmin();
      const fetcher = () => clienteAxios('/api/adminPharmacies/orders',
 {
     headers:{
@@ -12,22 +14,42 @@ export default function OrdersUsers() {const token = localStorage.getItem('AUTH_
     }
 }).then(data => data.data);
   
-  const { data, error, isLoading } = useSWR('/api/adminPharmacies/orders', fetcher)
+  const { data, error, isLoading } = useSWR('/api/adminPharmacies/orders', fetcher,{ refreshInterval: 300000 })
   if(isLoading) return 'Cargando...';
       const pedidosUsers =data.data ;
+
+
+   
   return (
-    <div>
+    <div className="flex flex-col w-full" >
      <div> <h1 className="text-4xl font-black text-center">Ordenes de Usuarios </h1>
         <p className="text-2xl my-10 text-center">Administre las ordenes desde aquí</p></div>
+        
+        <div className="flex w-full justify-around p-10">
+        <h3 className="text-2xl">Filtrar por: </h3>
+      <Filtro  pedidosUsers={pedidosUsers} />
+      </div>
+       
         <div className="w-full">
   <div className="flex flex-wrap justify-center">
-    {pedidosUsers.map(pedidos => ( 
-       <PedidosCardMod
-       key={pedidos.id}
-       pedidos={pedidos}
-       pedidoKey={pedidos.id} 
-       
-       />) )}
+  
+   {pedidosFiltrados.length > 0 ? (
+  pedidosFiltrados.map(pedido => ( 
+    <PedidosCardMod
+      key={pedido.id}
+      pedidos={pedido}
+      pedidoKey={pedido.id} 
+    />
+  ))
+) : (
+  pedidosUsers.map(pedido => ( 
+    <PedidosCardMod
+      key={pedido.id}
+      pedidos={pedido}
+      pedidoKey={pedido.id} 
+    />
+  ))
+)}
   
     
   </div>

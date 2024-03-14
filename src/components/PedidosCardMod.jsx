@@ -1,12 +1,12 @@
 import useAdmin from "../hooks/useAdmin"
 export default function PedidosCardMod({pedidos,pedidosKey}) {
-    const {hanldeClickModalOrderMod,handleSetPedidosUsers,handleSetArticulosInOrders,} = useAdmin();
+    const {handleClickModalOrderMod,handleSetPedidosUsers,handleSetArticulosInOrders,handleClickModalOrderDrogMod} = useAdmin();
   return (
-     <div className="w-full sm:w-1/2 lg:w-1/3 p-4">
-        <div className="max-w-md mx-auto border bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+<div className={`w-full sm:w-1/2 lg:w-1/3 p-4 ${pedidos.estado_id === 2 ? 'border-orange-500 shadow-green' : pedidos.estado_id === 8 ? 'border-red-500 shadow-red' : ''}`}>
+        <div className={`max-w-md mx-auto border  rounded-xl shadow-md overflow-hidden md:max-w-2xl ${pedidos.estado_id === 2 ? ' shadow-green bg-orange-200 ' : pedidos.estado_id === 8 ? 'border-white  shadow-red-300 bg-red-200 '  : ''}`}>
           <div className="md:flex">
             <div className="md:flex-shrink-0">
-             
+            
             </div>
             <div className="p-8">
               <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Pedido #{pedidos.id}</div>
@@ -17,9 +17,20 @@ export default function PedidosCardMod({pedidos,pedidosKey}) {
               <p className="mt-2 text-gray-500">Estado:<span className="capitalize">{pedidos.estado_id}</span> </p>
               <div className="mt-4">
                 <button className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-             onClick={() => {  hanldeClickModalOrderMod()
+             onClick={() => { 
+            
+              if(pedidos.estado_id===8){
+             handleClickModalOrderMod()
              handleSetPedidosUsers(pedidos);
              handleSetArticulosInOrders(pedidos.items)
+              }else if(pedidos.estado_id===2){
+             handleClickModalOrderDrogMod()
+                 handleSetPedidosUsers(pedidos);
+             handleSetArticulosInOrders(pedidos.items)
+              }else{
+                console.log("felicidades ya solicitaste ambos pedidos");
+              }
+   
              }}
                 >
                   Ver Detalles
