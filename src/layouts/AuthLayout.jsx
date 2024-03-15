@@ -1,6 +1,7 @@
 import { Outlet,useNavigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 export default function AuthLayout() {
       const navigate = useNavigate();
        useEffect(() => {
