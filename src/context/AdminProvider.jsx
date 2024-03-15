@@ -23,6 +23,7 @@ const AdminProvider = ({ children }) => {
   const [itemsMod, setItemsMod] = useState([]);
   const [pedidosFiltrados, setPedidosFiltrados] = useState([]);
   const [color, setColor] = useState('rojo');
+  const [inputCheckbox, setInputCheckbox]= useState(false);
   
   const handleFiltroChange = (color,pedidosUsers) => {
     // Aplicar el filtro
@@ -39,6 +40,12 @@ const AdminProvider = ({ children }) => {
       default:
         setPedidosFiltrados(pedidosUsers);
     }
+  };
+
+    const handleClickChangeCheckbox = () => {
+   
+    setInputCheckbox(!inputCheckbox);
+   
   };
 
 
@@ -135,6 +142,7 @@ const AdminProvider = ({ children }) => {
   };
 
   const handleClickSavePedido = async () => {
+  
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
       const id = pedidosUsersView.id;
@@ -147,13 +155,27 @@ const AdminProvider = ({ children }) => {
           },
         }
       );
-      console.log(response.data);
+
+        toast.success('Pedido usuario aceptado correctamente.')
+        handleClickModalOrderMod(!modalOrdersMod)
+        
+       
+      if(inputCheckbox){
+
+      handleClickSavePedidoDrog()
+
+      }else{
+
+        handleClickModalOrderDrogMod();
+      }
+              
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
   };
 
     const handleClickSavePedidoDrog = async () => {
+
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
       const id = pedidosUsersView.id;
@@ -169,9 +191,12 @@ const AdminProvider = ({ children }) => {
           },
         }
       );
-        
-    handleClickModalOrderDrogMod(!modalOrdersDrogMod);
-      toast.success("Pedido solicitado.");
+               
+      if(!inputCheckbox){
+    handleClickModalOrderDrogMod();
+      }
+
+      toast.success("Pedido solicitado a Drogueria. ");
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
@@ -226,7 +251,10 @@ const AdminProvider = ({ children }) => {
         setPedidosFiltrados,
         handleFiltroChange,
         color,
-        setColor
+        setColor,
+        inputCheckbox,
+        setInputCheckbox,
+        handleClickChangeCheckbox
       }}
     >
       {children}

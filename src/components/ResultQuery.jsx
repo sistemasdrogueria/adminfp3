@@ -6,15 +6,28 @@ const cantidad = 1;
 const{precio_publico, descripcion_pag,imagen,dcto,uni_min}= articulo;
 const precioRedondeado = parseFloat(precio_publico).toFixed(2);
   const productoData = {
-     precio_publico:precioRedondeado,
+     precio_publico:parseFloat(precioRedondeado),
         cantidad,
         articulo_id,
     };
 
-      const productoDataArt = {
+      
+              const productoDataArtMoreData = {
         articulo:{
-            'imagen':imagen,
-             'descripcion_pag':descripcion_pag,
+              'imagen':articulo.imagen,
+              'descripcion_pag':articulo.descripcion_pag,
+              'dcto':articulo.dcto,
+                'price':articulo.price,
+                'combo_id':articulo.combo_id,
+                'descuento_id':articulo.descuento_id,
+                'plazoley_dcto':articulo.plazoley_dcto,
+                'precio_publico':articulo.precio_publico,
+                'tipo_fact':articulo.tipo_fact,
+                'tipo_oferta':articulo.tipo_oferta,
+                'tipo_oferta_elegida':articulo.tipo_oferta_elegida,
+                'tipo_precio':articulo.tipo_precio,
+                'uni_min':articulo.uni_min,
+
         },
         precio_publico,
         cantidad,
@@ -60,29 +73,8 @@ const precioRedondeado = parseFloat(precio_publico).toFixed(2);
             <button
           type="button"
           onClick={()=> {
-            //revisa argenis que aca deberia ir el id
-            if(users){
-
-    handleAddProducto(productoData,productoDataArt)
-            }else{
-              
-              const productoDataArtMoreData = {
-        articulo:{
-            'imagen':articulo.imagen,
-             'descripcion_pag':articulo.descripcion_pag,
-             'dcto':articulo.dcto,
-             'uni_min':articulo.uni_min,
-              'price':articulo.price,
-        },
-        precio_publico,
-        cantidad,
-        articulo_id,
-    };
-
     handleAddProducto(productoData,productoDataArtMoreData)
-
-            }
-           
+          
           }}
                     className="bg-green-700 p-2 text-white rounded-md font-bold uppercase shadow-md text-center"
         >

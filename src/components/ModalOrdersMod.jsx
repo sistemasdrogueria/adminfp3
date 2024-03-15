@@ -17,7 +17,9 @@ export default function ModalOrdersMod() {
    handleAddProductoPedido,
    itemsMod,
    setItemsMod,
-   handleClickSavePedido
+   handleClickSavePedido,
+   inputCheckbox,
+   handleClickChangeCheckbox
 
   } = useAdmin();
 
@@ -87,7 +89,6 @@ setItemsMod([...itemsMod,productoData])
 setItems([...items,productoData])
 setArticulos([...articulos,productoDataArt])
 handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
-
  }
 
  // handleAddProductoPedido(pedidoid,itemsActualizado);
@@ -159,7 +160,7 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
     
     <div className="container overflow-y-scroll" style={{ maxHeight: '600px',maxWidth: '600px', margin: '0 auto' }}>
      {results.map((result) => (
-            <ResultQuery key={result.id} articulo={result} articulo_id={result.id} handleAddProducto={handleAddProducto}users={true}/>
+            <ResultQuery key={result.id} articulo={result} articulo_id={result.id} handleAddProducto={handleAddProducto}users={true} />
           ))}
    
     </div>
@@ -175,7 +176,7 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
 
          <div className=" justify-center  ">
           {articulos.map((pedidoItem) => (
-            <CardFarmItem key={pedidoItem.articulo_id} items={pedidoItem} pedidoid={pedidosUsersView.id}handleDeleteItem={handleDeleteItem} originalItems={JSON.parse(pedidosUsersView.items)} users={true}/>
+            <CardFarmItem key={pedidoItem.articulo_id} items={pedidoItem} pedidoid={pedidosUsersView.id}handleDeleteItem={handleDeleteItem} originalItems={JSON.parse(pedidosUsersView.items)} users={true} precioPublicoOr={pedidoItem.precio_publico}/>
           ))}
         </div>
        
@@ -187,8 +188,13 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
 
     </div>
     <div className="w-full flex justify-center">
+       <div className=" flex m-4 focus:outline-none text-black font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"> 
+  <label className="me-3" htmlFor="sendall"> Pedí lo mismo a Drogueria</label>
+  < input type="checkbox" onChange={handleClickChangeCheckbox} defaultChecked ={inputCheckbox} id="sendall" />
+  </div>
 <button onClick={handleClickSavePedido}
  type="button" className="m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido Usuario</button>
+
 <button type="button" className="m-4 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancelar Pedido</button>
 
     </div>

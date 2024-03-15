@@ -16,7 +16,8 @@ export default function Filtro({pedidosUsers }) {
   };
   return (
     <>
-      {/* Botones de filtro */}
+
+      <button className="inline-block  hover:bg-white text-black font-bold py-2 px-4 rounded bg-gray-500  border"   onClick={() => handleFiltro('blanco')}>Todos los Pedidos</button>
       <button className="inline-block  hover:bg-white text-black font-bold py-2 px-4 rounded bg-red-200"   onClick={() => handleFiltro('rojo')}>Pedidos Pendientes</button>
       <button className="inline-block  hover:bg-white text-black font-bold py-2 px-4 rounded bg-green-200" onClick={() => handleFiltro('verde')}>Pedidos Completados</button>
       <button className="inline-block  hover:bg-white text-black font-bold py-2 px-4 rounded bg-orange-200" onClick={() => handleFiltro('naranja')}>Pedidos Pendientes de Droguería</button>

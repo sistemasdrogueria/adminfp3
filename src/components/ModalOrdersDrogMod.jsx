@@ -185,7 +185,7 @@ setArticulos([...articulos,productoDataArt])
 
          <div className=" justify-center  ">
           {articulos.map((pedidoItem) => (
-            <CardFarmItem key={pedidoItem.articulo_id} items={pedidoItem} pedidoid={pedidosUsersView.id}handleDeleteItem={handleDeleteItem} originalItems={JSON.parse(pedidosUsersView.items)} users={false}/>
+            <CardFarmItem key={pedidoItem.articulo_id} items={pedidoItem} pedidoid={pedidosUsersView.id}handleDeleteItem={handleDeleteItem} originalItems={JSON.parse(pedidosUsersView.items)} users={false} precioPublicoOr={pedidoItem.precio_publico}/>
           ))}
         </div>
        

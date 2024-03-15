@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { formatearDinero } from "../helpers";
+import { validateNum } from "../helpers/validateNum";
 import useAdmin from "../hooks/useAdmin";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
-export default function CardFarmItem({ items,pedidoid, handleDeleteItem,originalItems,users }) {
+export default function CardFarmItem({ items,pedidoid, handleDeleteItem,originalItems,users, precioPublicoOr}) {
+
+
+  //const  precio_publico_original= validateNum(precioPublicoOr);
+  const  precio_publico_original= precioPublicoOr;
     const [ cantidad,setCantidad ] = useState(items.cantidad)
-    const precio = items.precio_publico/items.cantidad;
+    const precio = precio_publico_original/items.cantidad;
      const [ total,setTotal ] = useState(precio)
      const [originalItemsTemp, setOriginalsItemsTemp] = useState(originalItems);
       const {handleDeleteProductOrders,articulos,handleSetPedidosUsersMod,itemsMod,setItemsMod,setArticulos} = useAdmin();
@@ -25,10 +30,11 @@ export default function CardFarmItem({ items,pedidoid, handleDeleteItem,original
       useEffect(() => {
         if(users){
 
-    setTotal(items.precio_publico * cantidad);
+    setTotal(precio * cantidad);
         }else{
 
        setTotal(items.articulo.price * cantidad);
+      
         }
 
   }, [cantidad, items.precio_publico,items]);
@@ -99,7 +105,7 @@ const handleDeleteProduct = (articulo_id) => {
 
         <p className="mt-2 text-gray-500">
          {users ? formatearDinero(total)
-               :formatearDinero(items.articulo.price)}
+               :formatearDinero(total)}
                </p>
                 {
                 !users && items.articulo.dcto && (
