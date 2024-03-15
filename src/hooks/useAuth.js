@@ -47,6 +47,7 @@ const login = async (datos, setErrores) => {
 }
 
 const logout = async () => {
+        
 try {
     await clienteAxios.post('/api/auth/logout', null, {
           headers:{
@@ -64,6 +65,10 @@ try {
 }
 
     useEffect(() => {
+
+         if (!user) {
+        navigate('/auth/login');
+    } else {
         if (middleware === 'guest' && user) {
             navigate('/admin');
         }
@@ -71,8 +76,10 @@ try {
             navigate('/admin/farmacia');
         }
         if (middleware === 'auth' && error) {
+           
             navigate('/auth/login');
         }
+    }
     }, [middleware, user, error, navigate]);
 
 return {
