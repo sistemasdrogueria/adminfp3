@@ -51,7 +51,7 @@ const precioRedondeado = parseFloat(precio_publico).toFixed(2);
         
            </p>
              {!users && uni_min ?(
-                   <p className="mt-2 text-gray-500">{uni_min}</p>
+                   <p className="mt-2 text-gray-500">Unidades min: {uni_min}</p>
                     )
               : (
     // Este bloque se renderizará si la condición es falsa
@@ -59,7 +59,7 @@ const precioRedondeado = parseFloat(precio_publico).toFixed(2);
 )}
 
                  {!users && dcto ?(
-                   <p className="mt-2 text-red-500">{dcto} %</p>
+                   <p className="mt-2 text-red-500">Descuento: {dcto} %</p>
                     )
               : (
     // Este bloque se renderizará si la condición es falsa

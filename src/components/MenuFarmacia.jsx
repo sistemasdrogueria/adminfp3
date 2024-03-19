@@ -7,7 +7,7 @@ export default function MenuFarmacia() {
     const {logout}= useAuth({middleware:'Auth'});
   return (
      <div className="bg-white">
-      <nav className='flex flex-col p-4'>
+      <nav className='flex flex-col p-8'>
     <Link to="/admin/farmacia/ordersUsers" className='font-bold text-lg'>Ordenes Usuarios</Link>
     <Link to="/admin/farmacia/ordersDrogueria" className='font-bold text-lg'>Ordenes Drogueria</Link>
     <Link to="/admin/farmacia" className='font-bold text-lg'>Modificar Perfil</Link>

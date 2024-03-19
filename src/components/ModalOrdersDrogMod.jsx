@@ -140,15 +140,16 @@ setArticulos([...articulos,productoDataArt])
         </svg>
       </button>
     </div>
-     <div className="w-full flex  h-screen">
-      <div className=" w-4/6 bg-gray-100 border">
+     <div className="w-full md:flex sm:flex-col lg:flex-row">
+      <div className="sm:w-full md:w-4/6 bg-gray-100 border h-max">
 
 <div className="w-full mx-auto">   
-<div className="bg-white flex flex-col  items-center align-middle p-14 ">
+<div className="bg-white flex flex-col  items-center align-middles sm:p-0 md:p-14 ">
   <h1 className="text-2xl font-black  text-center mb-3 ">Buscar un producto</h1>
   <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-    <div className="relative w-96">
-        <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+    <div className="relative sm:w-60 sm- sm:flex md:mb-10 md:w-96">
+      <div>
+        <div className="md:absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg className="w-4 h-4 text-gray-500 dark:text-gray-400"
              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" 
              fill="none"
@@ -161,8 +162,9 @@ setArticulos([...articulos,productoDataArt])
          value={query}  
          id="default-search" 
          onChange={(e) => setQuery(e.target.value)}
-         className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Productos ..." required />
-        <button onClick={handleSearch} type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+         className="block w-full p-4 mb-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Productos ..." required />
+        <button onClick={handleSearch} type="submit" className="text-white md:absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+    </div>
     </div>
 </div>
     
@@ -175,10 +177,11 @@ setArticulos([...articulos,productoDataArt])
 </div>
 
       </div>
-       <div  className="w-1/3  bg-gray-100 border  overflow-y-scroll">
-        <div className="h-1/6 bg-white ">
+       <div  className="sm:w-full md:w-1/3 h-full bg-gray-100 border  overflow-y-scroll">
+        <div className="h-full bg-white ">
           <h3 className="text-2xl font-black  text-center">Carrito para Drogueria</h3>
-            <p className="ms-4">Codigo drogueria : Codigo</p>
+            <p className="ms-4">Codigo de drogueria: { pedidosUsersView.pharmacies? pedidosUsersView.pharmacies.codigo_ds : null}</p>
+            <p className="ms-4">Pedido fp : #{ pedidosUsersView.id}</p>
             <p className="ms-4">{`Items/cant : ${JSON.parse(pedidosUsersView.items).length}/${totalCantidad}`}</p>
           <p className="font-black text-md mt-1 text-center"> Los precios no tienen el iva agregado.</p>
         </div>
@@ -196,7 +199,7 @@ setArticulos([...articulos,productoDataArt])
      </div>
 
     </div>
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center mt-10">
 <button onClick={handleClickSavePedidoDrog}
  type="button" className="m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido Drogueria</button>
 <button type="button" className="m-4 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancelar Pedido Drogueria</button>

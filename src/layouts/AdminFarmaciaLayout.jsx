@@ -7,8 +7,9 @@ import useAdmin from '../hooks/useAdmin';
 import ModalOrdersMod from '../components/ModalOrdersMod';
 import ModalOrdersDrogMod from '../components/ModalOrdersDrogMod';
 import { useEffect } from "react";
+import ModalOrdersDetails from '../components/ModalOrdersDetails';
 export default function AdminFarmaciaLayout() {
-  const {modalOrdersMod, modalOrdersDrogMod }= useAdmin();
+  const {modalOrdersMod, modalOrdersDrogMod,modalOrdersDetails }= useAdmin();
       const{user,error } =useAuth({middleware:'adminfarmacia'});
 
       const navigate = useNavigate();
@@ -26,8 +27,8 @@ export default function AdminFarmaciaLayout() {
           <Outlet />
         </main>
     </div>
-    <Modal isOpen={modalOrdersMod? modalOrdersMod: modalOrdersDrogMod}>
-  {modalOrdersMod ? <ModalOrdersMod />: (modalOrdersDrogMod ? <ModalOrdersDrogMod />: null)}
+    <Modal isOpen={modalOrdersMod? modalOrdersMod:(modalOrdersDrogMod|| modalOrdersDetails) } style={{ overlay: { backgroundColor: 'rgba(97, 97, 97, 0.98)' } }}>
+  {modalOrdersMod ? <ModalOrdersMod />: (modalOrdersDrogMod ? <ModalOrdersDrogMod />: modalOrdersDetails?<ModalOrdersDetails/>: null)}
     </Modal>
             <ToastContainer/>
         </>  

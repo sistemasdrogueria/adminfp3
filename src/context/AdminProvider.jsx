@@ -15,11 +15,14 @@ const AdminProvider = ({ children }) => {
   const [modalPedidosUsers, setModalPedidosUsers] = useState(false);
   const [modalOrdersMod, setModalOrdersMod] = useState(false);
   const [modalOrdersDrogMod,setModalOrdersDrogMod]= useState(false);
+  const [modalOrdersDetails,setModalOrdersDetails]= useState(false);
   const [pedidosUsersMod, setPedidosUsersMod] = useState([]);
   const [pedidosUsersView, setPedidosUserView] = useState([]);
   const [idsArticulosInOrders, setIdsArticulosInOrders] = useState([]);
+  const [idsArticulosDrogInOrders, setIdsArticulosDrogInOrders] = useState([]);
   const [itemsUsers, setItemsUsers] = useState([]);
   const [articulos, setArticulos] = useState([]);
+  const [articulosDrog, setArticulosDrog] = useState([]);
   const [itemsMod, setItemsMod] = useState([]);
   const [pedidosFiltrados, setPedidosFiltrados] = useState([]);
   const [color, setColor] = useState('rojo');
@@ -36,6 +39,9 @@ const AdminProvider = ({ children }) => {
         break;
       case 'naranja':
         setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 1));
+        break;
+      case 'indigo':
+        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 0));
         break;
       default:
         setPedidosFiltrados(pedidosUsers);
@@ -67,6 +73,10 @@ const AdminProvider = ({ children }) => {
 
     setModalOrdersDrogMod(!modalOrdersDrogMod)
   }
+  
+  const handleClickModalOrdersDetails = () => {
+    setModalOrdersDetails(!modalOrdersDetails);
+  };
   const handleSetPedidosUsers = (pedidosUsersView) => {
     setPedidosUserView(pedidosUsersView);
   };
@@ -77,6 +87,10 @@ const AdminProvider = ({ children }) => {
 
   const handleSetArticulos = (articulos) => {
     setArticulos(articulos);
+  };
+
+    const handleSetArticulosDrog = (articulos) => {
+    setArticulosDrog(articulos);
   };
   const handleSetUser = (usersEdit) => {
     setUsersEdit(usersEdit);
@@ -100,6 +114,15 @@ const AdminProvider = ({ children }) => {
     );
     setIdsArticulosInOrders(ids);
   };
+
+    const handleSetArticulosDrogInOrders = (idsArticulosDrogInOrders) => {
+    const ids = JSON.parse(idsArticulosDrogInOrders).map(
+      (item) => item.articulo_id
+    );
+    setIdsArticulosDrogInOrders(ids);
+;
+  };
+
 
   const handleDeleteProductOrders = async (id, items) => {
     try {
@@ -148,7 +171,7 @@ const AdminProvider = ({ children }) => {
       const id = pedidosUsersView.id;
       const response = await clienteAxios.put(
         `/api/adminPharmacies/orders/save/${pedidosUsersView.id}`,
-        { id },
+        { id,estado_id:1 },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -202,7 +225,30 @@ const AdminProvider = ({ children }) => {
     }
     
   };
+ const handleClickCancelPedido = async () => {
 
+    try {
+      const token = localStorage.getItem("AUTH_TOKEN");
+      const id = pedidosUsersView.id;
+      const response = await clienteAxios.put(
+        `/api/adminPharmacies/orders/save/${pedidosUsersView.id}`,
+        { id,
+        estado_id:0 },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    handleClickModalOrderMod();
+
+
+      toast.success("Pedido Cancelado. ");
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+    
+  };
   return (
     <AdminContext.Provider
       value={{
@@ -254,7 +300,17 @@ const AdminProvider = ({ children }) => {
         setColor,
         inputCheckbox,
         setInputCheckbox,
-        handleClickChangeCheckbox
+        handleClickChangeCheckbox,
+        handleClickCancelPedido,
+        handleClickModalOrdersDetails,
+        modalOrdersDetails,
+        setModalOrdersDetails,
+        handleSetArticulosDrogInOrders,
+        setIdsArticulosDrogInOrders,
+        idsArticulosDrogInOrders,
+        handleSetArticulosDrog,
+        setArticulosDrog,
+        articulosDrog,
       }}
     >
       {children}

@@ -1,10 +1,11 @@
 import useAdmin from "../hooks/useAdmin"
 import { setDate } from "../helpers/setDate";
+import { toast } from "react-toastify";
 export default function PedidosCardMod({pedidos,pedidosKey}) {
-    const {handleClickModalOrderMod,handleSetPedidosUsers,handleSetArticulosInOrders,handleClickModalOrderDrogMod} = useAdmin();
+    const {handleClickModalOrderMod,handleSetPedidosUsers,handleSetArticulosInOrders,handleSetArticulosDrogInOrders,handleClickModalOrderDrogMod,handleClickModalOrdersDetails} = useAdmin();
   return (
 <div className={`w-full sm:w-1/2 lg:w-1/3 p-4 ${pedidos.estado_id === 1 ? 'border-orange-500 shadow-green' : pedidos.estado_id === 8 ? 'border-red-500 shadow-red' : ''}`}>
-        <div className={`max-w-md mx-auto border  rounded-xl shadow-md overflow-hidden md:max-w-2xl ${pedidos.estado_id === 1 ? ' shadow-green bg-orange-200 ' : pedidos.estado_id === 8 ? 'border-white  shadow-red-300 bg-red-200 '  : 'border-white  shadow-green-300 bg-green-200 '}`}>
+        <div className={`max-w-md mx-auto border  rounded-xl shadow-md overflow-hidden md:max-w-2xl ${pedidos.estado_id === 1 ? ' shadow-green bg-orange-200 ' : pedidos.estado_id === 8 ? 'border-white  shadow-red-300 bg-red-200 '  :pedidos.estado_id === 0 ? 'border-white  shadow-indigo-400 bg-indigo-400 ':'border-white  shadow-green-300 bg-green-200 '}`}>
           <div className="md:flex">
             <div className="md:flex-shrink-0">
             
@@ -28,13 +29,21 @@ export default function PedidosCardMod({pedidos,pedidosKey}) {
              handleClickModalOrderDrogMod()
                  handleSetPedidosUsers(pedidos);
              handleSetArticulosInOrders(pedidos.items)
+              }else if (pedidos.estado_id== 0){
+               toast.warning("Pedido Cancelado!");
+              }else if(pedidos.estado_id == 2){
+            handleClickModalOrdersDetails();
+            handleSetPedidosUsers(pedidos);
+            handleSetArticulosInOrders(pedidos.items)
+            handleSetArticulosDrogInOrders(pedidos.orders_drogueria.items)
               }else{
-                console.log("felicidades ya solicitaste ambos pedidos");
+
+                console.log("Hubo un error")
               }
    
              }}
                 >
-                 {pedidos.estado_id== 8 ?'Solicitar Pedidos':(pedidos.estado_id== 1 ? 'Falta Pedido drogueria': 'Ver detalles')}
+                 {pedidos.estado_id== 8 ?'Solicitar Pedidos':(pedidos.estado_id== 1 ? 'Falta Pedido drogueria':pedidos.estado_id== 0? 'Pedido Cancelado': 'Ver detalles')}
                 </button>
               </div>
             </div>
