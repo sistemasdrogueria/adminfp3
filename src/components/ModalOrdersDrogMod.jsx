@@ -141,15 +141,14 @@ setArticulos([...articulos,productoDataArt])
       </button>
     </div>
      <div className="w-full md:flex sm:flex-col lg:flex-row">
-      <div className="sm:w-full md:w-4/6 bg-gray-100 border h-max">
+      <div className="w-full md:w-4/6 lg:w-4/6 bg-gray-100 border">
 
 <div className="w-full mx-auto">   
-<div className="bg-white flex flex-col  items-center align-middles sm:p-0 md:p-14 ">
+<div className="bg-white flex flex-col  items-center align-middle sm:p-0 md:p-14 ">
   <h1 className="text-2xl font-black  text-center mb-3 ">Buscar un producto</h1>
   <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-    <div className="relative sm:w-60 sm- sm:flex md:mb-10 md:w-96">
-      <div>
-        <div className="md:absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+    <div className="relative sm:w-80 sm:flex md:w-96">
+        <div className="absolute md:inset-y-0 start-0 flex items-center ps-3 pointer-events-none sm:absolute sm:top-15">
             <svg className="w-4 h-4 text-gray-500 dark:text-gray-400"
              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" 
              fill="none"
@@ -163,8 +162,7 @@ setArticulos([...articulos,productoDataArt])
          id="default-search" 
          onChange={(e) => setQuery(e.target.value)}
          className="block w-full p-4 mb-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Productos ..." required />
-        <button onClick={handleSearch} type="submit" className="text-white md:absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
-    </div>
+        <button onClick={handleSearch} type="submit" className="text-white mt-3 mb-3 md:absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full md:w-20">Buscar</button>
     </div>
 </div>
     
