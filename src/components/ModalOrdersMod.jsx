@@ -19,7 +19,8 @@ export default function ModalOrdersMod() {
    handleClickSavePedido,
    inputCheckbox,
    handleClickChangeCheckbox,
-   handleClickCancelPedido
+   handleClickCancelPedido,
+   handleClickEstadoPedido
 
   } = useAdmin();
 
@@ -30,6 +31,9 @@ export default function ModalOrdersMod() {
   const [items,setItems] = useState(item);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]); 
+
+  const [elapsedTime, setElapsedTime] = useState(pedidosUsersView.time); // Tiempo transcurrido en segundos
+  const [timer, setTimer] = useState(null); 
 
  const handleCancel = () => {
         Swal.fire({
@@ -45,6 +49,7 @@ export default function ModalOrdersMod() {
                 // Aquí puedes ejecutar la acción de cancelar el pedido
                 // Por ejemplo, puedes llamar a una función cancelarPedido()
                 handleClickCancelPedido();
+                   clearInterval(timer);
             }
         });
     };
@@ -87,6 +92,7 @@ useEffect(() => {
   }
 }, [idsArticulosInOrders, solicitudEnviada]);
 
+
 const handleDeleteItem = (articulo_id) => {
     // Filtra los elementos para eliminar el que coincida con el articulo_id
     const pedidoActualizado = articulos.filter((producto) => producto.articulo_id !== articulo_id);
@@ -94,7 +100,9 @@ const handleDeleteItem = (articulo_id) => {
     setArticulos(pedidoActualizado);
     setItemsMod(ItemsActualizado)
 };
-
+ const updateState = () => {
+  handleClickEstadoPedido(15,0);
+  };
 const handleAddProducto = (productoData,productoDataArt )=> {
 
  if (articulos.some((articulosState) => articulosState.articulo_id === productoDataArt.articulo_id)) {
@@ -129,11 +137,55 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
   };
 
 
+  useEffect(() => {
+    // Inicia el temporizador
+    const newTimer = setInterval(() => {
+      setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+    }, 1000); // Intervalo de 1 segundo
+     
+    // Inicia la alerta cuando hayan pasado los 5 minutos
+    if (!timer && elapsedTime === 0) {
+      setTimer(newTimer); // Guarda la referencia al temporizador
+      Swal.fire({
+        title: "¡Alerta!",
+        text: "¡Tienes 5 minutos para confirmar el pedido!",
+        icon: "warning",
+        timer: 6000, // 5 minutos en milisegundos
+        timerProgressBar: true,
+        showConfirmButton: false,
+        
+        
+      });
+    }
+          if(elapsedTime >= 500){
+          handleClickModalOrderMod(); 
+          updateState(); //
+          return () => clearInterval(newTimer);
+           }
+
+    // Limpia el temporizador cuando el componente se desmonta o se cierra el modal
+    return () => clearInterval(newTimer);
+  }, [elapsedTime, timer]);
+
+   const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+  };
+
+
+const handleButtonClick = () => {
+  handleClickModalOrderMod();
+  handleClickEstadoPedido(1,elapsedTime);
+};
   return (
     <div>
     <div className="md:w-full  ">
     <div className="flex justify-end">
-      <button onClick={handleClickModalOrderMod}>
+      <button onClick={handleButtonClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -151,8 +203,15 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
       </button>
     </div>
      <div className="w-full md:flex sm:flex-col lg:flex-row">
+    
       <div className="w-full md:w-4/6 lg:w-4/6 bg-gray-100 border">
-
+<div className="flex align-middle w-full justify-center">
+        
+<p className="font-bold">Tiempo transcurrido: </p>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg><p className="font-bold">{formatTime(elapsedTime)}</p>
+      </div>
 <div className="w-full mx-auto">   
 <div className="bg-white flex flex-col  items-center align-middle sm:p-0 md:p-14  ">
   <h1 className="text-2xl font-black  text-center mb-3 ">Buscar un producto</h1>
@@ -215,6 +274,7 @@ Telefono: <a href={`tel:${pedidosUsersView.users.cellphone}`}>{pedidosUsersView.
      </div>
 
     </div>
+     <p className="font-black text-md mt-1 text-center"> Precios con iva.</p>
     <div className="flex flex-col justify-between md:flex-row md:justify-center md:w-full  mt-10">
        <div className=" flex m-4 focus:outline-none text-black font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"> 
   <label className="me-3" htmlFor="sendall"> Pedí lo mismo a Drogueria</label>

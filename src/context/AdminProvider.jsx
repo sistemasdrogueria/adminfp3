@@ -41,7 +41,7 @@ const AdminProvider = ({ children }) => {
         setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 1));
         break;
       case 'indigo':
-        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 0));
+        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 12));
         break;
       default:
         setPedidosFiltrados(pedidosUsers);
@@ -249,6 +249,33 @@ const AdminProvider = ({ children }) => {
     }
     
   };
+
+   const handleClickEstadoPedido = async (estado,time) => {
+
+    try {
+      const token = localStorage.getItem("AUTH_TOKEN");
+      const id = pedidosUsersView.id;
+      const response = await clienteAxios.put(
+        `/api/adminPharmacies/orders/save/${pedidosUsersView.id}`,
+        { id,
+        estado_id:estado,
+        time:time
+         },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    handleClickModalOrderMod();
+
+
+      toast.success("Pedido Cancelado. ");
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+    
+  };
   return (
     <AdminContext.Provider
       value={{
@@ -311,6 +338,7 @@ const AdminProvider = ({ children }) => {
         handleSetArticulosDrog,
         setArticulosDrog,
         articulosDrog,
+        handleClickEstadoPedido,
       }}
     >
       {children}

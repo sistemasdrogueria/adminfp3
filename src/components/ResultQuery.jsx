@@ -3,8 +3,18 @@ import { formatearDinero } from "../helpers";
 export default function ResultQuery({articulo,articulo_id,handleAddProducto,users }) {
 
 const cantidad = 1;
-const{precio_publico, descripcion_pag,imagen,dcto,uni_min}= articulo;
-const precioRedondeado = parseFloat(precio_publico).toFixed(2);
+const{precio_publico,price_pharmacies, descripcion_pag,imagen,dcto,uni_min}= articulo;
+
+
+if(users){
+var precioRedondeado = parseFloat(precio_publico).toFixed(2);
+
+}else{
+
+  var precioRedondeado = parseFloat(price_pharmacies).toFixed(2);
+
+}
+
   const productoData = {
      precio_publico:parseFloat(precioRedondeado),
         cantidad,
@@ -18,6 +28,7 @@ const precioRedondeado = parseFloat(precio_publico).toFixed(2);
               'descripcion_pag':articulo.descripcion_pag,
               'dcto':articulo.dcto,
                 'price':articulo.price,
+                'price_pharmacies':articulo.price_pharmacies,
                 'combo_id':articulo.combo_id,
                 'descuento_id':articulo.descuento_id,
                 'plazoley_dcto':articulo.plazoley_dcto,
@@ -26,6 +37,7 @@ const precioRedondeado = parseFloat(precio_publico).toFixed(2);
                 'tipo_oferta':articulo.tipo_oferta,
                 'tipo_oferta_elegida':articulo.tipo_oferta_elegida,
                 'tipo_precio':articulo.tipo_precio,
+                'iva':articulo.iva,
                 'uni_min':articulo.uni_min,
 
         },
@@ -47,7 +59,7 @@ const precioRedondeado = parseFloat(precio_publico).toFixed(2);
             {descripcion_pag}</p>
 
         <p className="mt-2 text-gray-500">
-               {users?formatearDinero(precio_publico):formatearDinero(articulo.price)}
+               {users?formatearDinero(precio_publico):formatearDinero(price_pharmacies)}
         
            </p>
              {!users && uni_min ?(

@@ -30,10 +30,11 @@ export default function CardFarmItem({ items,pedidoid, handleDeleteItem,original
       useEffect(() => {
         if(users){
 
-    setTotal(precio * cantidad);
-        }else{
+setTotal(items.articulo.price * cantidad);
 
-       setTotal(items.articulo.price * cantidad);
+        }else{
+    setTotal(precio * cantidad);
+       
       
         }
 
@@ -129,6 +130,15 @@ const handleDeleteProduct = (articulo_id) => {
                   </p>
                 )
               }
+              <p className="mt-2 text-gray-500"> 
+             {items.articulo.iva === 1 ? (
+    <img
+      src={`https://www.drogueriasur.com.ar/ds/img/iva.png`}
+      title="El producto tiene iva."
+      alt='TIENE IVA AGREGADO'
+    />
+  ) : null}
+               </p>
         <div className="flex gap-4 justify-center  items-end   w-36 ">
             <div className="flex gap-4 justify-center  w-36 mt-2 border rounded-md shad">
           <button type="button"

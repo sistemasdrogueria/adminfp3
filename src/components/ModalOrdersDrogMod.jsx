@@ -118,7 +118,7 @@ setArticulos([...articulos,productoDataArt])
         }
   };
 
-
+  
   return (
     <div>
     <div className="md:w-full  ">
@@ -181,12 +181,13 @@ setArticulos([...articulos,productoDataArt])
             <p className="ms-4">Codigo de drogueria: { pedidosUsersView.pharmacies? pedidosUsersView.pharmacies.codigo_ds : null}</p>
             <p className="ms-4">Pedido fp : #{ pedidosUsersView.id}</p>
             <p className="ms-4">{`Items/cant : ${JSON.parse(pedidosUsersView.items).length}/${totalCantidad}`}</p>
-          <p className="font-black text-md mt-1 text-center"> Los precios no tienen el iva agregado.</p>
         </div>
 
          <div className=" justify-center  ">
           {articulos.map((pedidoItem) => (
-            <CardFarmItem key={pedidoItem.articulo_id} items={pedidoItem} pedidoid={pedidosUsersView.id}handleDeleteItem={handleDeleteItem} originalItems={JSON.parse(pedidosUsersView.items)} users={false} precioPublicoOr={pedidoItem.precio_publico}/>
+        
+            <CardFarmItem key={pedidoItem.articulo_id} items={pedidoItem} pedidoid={pedidosUsersView.id}handleDeleteItem={handleDeleteItem} originalItems={JSON.parse(pedidosUsersView.items)} users={false} precioPublicoOr={pedidoItem.articulo.price_pharmacies}/>
+         
           ))}
         </div>
        
@@ -197,6 +198,7 @@ setArticulos([...articulos,productoDataArt])
      </div>
 
     </div>
+     <p className="font-black text-md mt-1 text-center"> Precios sin iva.</p>
     <div className="w-full flex justify-center mt-10">
 <button onClick={handleClickSavePedidoDrog}
  type="button" className="m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido Drogueria</button>
