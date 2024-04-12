@@ -10,6 +10,7 @@ import PedidosUsuarios from "./views/PedidosUsuarios";
 import AdminFarmaciaLayout from "./layouts/AdminFarmaciaLayout";
 import OrdersUsers from "./views/OrdersUsers";
 import OrdersDrogueria from "./views/OrdersDrogueria";
+import Perfile from "./views/Perfile";
 
 
 const router = createBrowserRouter([
@@ -102,6 +103,13 @@ const router = createBrowserRouter([
          path: '/admin/farmacia/ordersDrogueria',
         element:<OrdersDrogueria/>
       },
+
+         {
+         path: '/admin/farmacia/perfile',
+        element:<Perfile/>
+      },
+
+      
     ],
   },
   
