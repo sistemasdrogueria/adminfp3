@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import useAdmin from "../hooks/useAdmin";
 
 
@@ -14,13 +15,18 @@ export default function Filtro({pedidosUsers }) {
     setColor(color);
     handleFiltroChange(color,pedidosUsers)
   };
+
+    useEffect(() => {
+        handleFiltro('rojo'); // Establecer a pedidos pendientes en el montaje
+    }, []);
   return (
     <>
-      <button className="sm: w-80 inline-block mb-2 ms-2 hover:bg-white text-black font-bold py-2 px-4 rounded bg-gray-500  border"   onClick={() => handleFiltro('blanco')}>Todos los Pedidos</button>
-      <button className="sm: w-80 inline-block mb-2 ms-2 hover:bg-white text-black font-bold py-2 px-4 rounded bg-red-200"   onClick={() => handleFiltro('rojo')}>Pedidos Pendientes</button>
-      <button className="sm: w-80 inline-block mb-2 ms-2 hover:bg-white text-black font-bold py-2 px-4 rounded bg-green-200" onClick={() => handleFiltro('verde')}>Pedidos Solicitados</button>
-      <button className="sm: w-80 inline-block mb-2 ms-2 hover:bg-white text-black font-bold py-2 px-4 rounded bg-orange-200" onClick={() => handleFiltro('naranja')}>Pedidos Pendientes de Droguería</button>
-      <button className="sm: w-80 inline-block mb-2 ms-2 hover:bg-white text-black font-bold py-2 px-4 rounded bg-indigo-800" onClick={() => handleFiltro('indigo')}>Pedidos Cancelados</button>
+
+            <button className={`sm:w-80 inline-block mb-2 ms-2 font-bold py-2 px-4 rounded  transition-all duration-300 ${color === 'blanco' ? 'bg-gray-600 border-2 border-black shadow-lg ' : 'bg-gray-300 hover:bg-gray-300 text-gray-600 '}`} onClick={() => handleFiltro('blanco')}>Todos los Pedidos</button>
+            <button className={`sm:w-80 inline-block mb-2 ms-2 font-bold py-2 px-4 rounded  transition-all duration-300 ${color === 'rojo' ? 'bg-red-300 border-2 border-black shadow-lg ' : 'bg-red-200 hover:bg-red-300 text-gray-600 '}`} onClick={() => handleFiltro('rojo')}>Pedidos Pendientes</button>
+            <button className={`sm:w-80 inline-block mb-2 ms-2 font-bold py-2 px-4 rounded  transition-all duration-300 ${color === 'verde' ? 'bg-green-600 border-2 border-black shadow-lg' : 'bg-green-200 hover:bg-green-300 text-gray-600'}`} onClick={() => handleFiltro('verde')}>Pedidos Solicitados</button>
+            <button className={`sm:w-80 inline-block mb-2 ms-2 font-bold py-2 px-4 rounded  transition-all duration-300 ${color === 'naranja' ? 'bg-orange-600 border-2 border-black shadow-lg' : 'bg-orange-200 hover:bg-orange-300 text-gray-600'}`} onClick={() => handleFiltro('naranja')}>Pedidos Pendientes de Droguería</button>
+            <button className={`sm:w-80 inline-block mb-2 ms-2 font-bold py-2 px-4 rounded  transition-all duration-300 ${color === 'indigo' ? 'bg-indigo-800 border-2 border-black shadow-lg' : 'bg-indigo-600 hover:bg-indigo-300 text-gray-600'}`} onClick={() => handleFiltro('indigo')}>Pedidos Cancelados</button>
     </>
   );
 }

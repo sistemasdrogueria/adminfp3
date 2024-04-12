@@ -206,5 +206,5 @@ setArticulos([...articulos,productoDataArt])
 
     </div>
     </div>
-  )
+)
 }
