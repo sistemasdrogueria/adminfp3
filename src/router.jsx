@@ -11,6 +11,7 @@ import AdminFarmaciaLayout from "./layouts/AdminFarmaciaLayout";
 import OrdersUsers from "./views/OrdersUsers";
 import OrdersDrogueria from "./views/OrdersDrogueria";
 import Perfile from "./views/Perfile";
+import Estadisticas from "./views/Estadisticas";
 
 
 const router = createBrowserRouter([
@@ -105,8 +106,12 @@ const router = createBrowserRouter([
       },
 
          {
-         path: '/admin/farmacia/perfile',
+         path: '/admin/farmacia/perfil',
         element:<Perfile/>
+      },
+         {
+         path: '/admin/farmacia/estadisticas',
+        element:<Estadisticas/>
       },
 
       
