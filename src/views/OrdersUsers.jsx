@@ -1,13 +1,16 @@
 
-import useSWR from "swr";
+import useSWR, { mutate } from 'swr';
 import clienteAxios from "../config/axios";
 import useAdmin    from "../hooks/useAdmin";
 import PedidosCardMod from "../components/PedidosCardMod";
 import Filtro from "../components/Filtro";
 
 
+
 export default function OrdersUsers() {const token = localStorage.getItem('AUTH_TOKEN')
-   const {pedidosFiltrados,setPedidosFiltrados} = useAdmin();
+   const {pedidosFiltrados,setPedidosFiltrados,handleSetPedidos,pedidos} = useAdmin();
+  
+   
      const fetcher = () => clienteAxios('/api/adminPharmacies/orders',
 {
     headers:{
@@ -17,17 +20,14 @@ export default function OrdersUsers() {const token = localStorage.getItem('AUTH_
   
   const { data, error, isLoading } = useSWR('/api/adminPharmacies/orders', fetcher,{ refreshInterval: 300000 })
   if(isLoading) return 'Cargando...';
-      const pedidosUsers =data.data ;
-
-
-   
+    const pedidosUsers =data.data ;
   return (
     <div className="flex flex-col w-full sm:w-auto" >
      <div> <h1 className="text-4xl font-black text-center">Ordenes de Usuarios </h1>
         <p className="text-2xl my-10 text-center">Administre las ordenes desde aquí</p></div>
         
         <div className="md:flex w-full md:justify-around p-10 sm:grid grid-cols-2">
-        <h3 className="text-2xl">Filtrar por: </h3>
+        <h3 className="text-2xl">Filtrar por :</h3>
       <Filtro  pedidosUsers={pedidosUsers} />
       </div>
        
@@ -40,6 +40,9 @@ export default function OrdersUsers() {const token = localStorage.getItem('AUTH_
       key={pedido.id}
       pedidos={pedido}
       pedidoKey={pedido.id} 
+      pedidoAll={pedidosFiltrados} 
+
+
     />
   ))
 ) : (
@@ -47,7 +50,9 @@ export default function OrdersUsers() {const token = localStorage.getItem('AUTH_
     <PedidosCardMod
       key={pedido.id}
       pedidos={pedido}
-      pedidoKey={pedido.id} 
+      pedidoKey={pedido.id}
+      pedidoAll={pedidosUsers} 
+  
     />
   ))
 )}

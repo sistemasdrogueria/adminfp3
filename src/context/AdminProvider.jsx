@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useLocation } from "react";
 import { toast } from "react-toastify";
 import clienteAxios from "../config/axios";
+import { mutate } from 'swr';
 
 const AdminContext = createContext();
 
@@ -14,10 +15,10 @@ const AdminProvider = ({ children }) => {
   const [modalFarmacias, setmodalFarmacias] = useState(false);
   const [modalPedidosUsers, setModalPedidosUsers] = useState(false);
   const [modalOrdersMod, setModalOrdersMod] = useState(false);
-  const [modalOrdersDrogMod,setModalOrdersDrogMod]= useState(false);
-  const [modalOrdersDetails,setModalOrdersDetails]= useState(false);
+  const [modalOrdersDrogMod, setModalOrdersDrogMod] = useState(false);
+  const [modalOrdersDetails, setModalOrdersDetails] = useState(false);
   const [pedidosUsersMod, setPedidosUsersMod] = useState([]);
-  const [pedidosUsersView, setPedidosUserView] = useState([]);
+  const [pedidosUsersView, setPedidosUsersView] = useState([]);
   const [idsArticulosInOrders, setIdsArticulosInOrders] = useState([]);
   const [idsArticulosDrogInOrders, setIdsArticulosDrogInOrders] = useState([]);
   const [itemsUsers, setItemsUsers] = useState([]);
@@ -25,35 +26,45 @@ const AdminProvider = ({ children }) => {
   const [articulosDrog, setArticulosDrog] = useState([]);
   const [itemsMod, setItemsMod] = useState([]);
   const [pedidosFiltrados, setPedidosFiltrados] = useState([]);
-  const [color, setColor] = useState('rojo');
-  const [inputCheckbox, setInputCheckbox]= useState(false);
-  
-  const handleFiltroChange = (color,pedidosUsers) => {
+  const [color, setColor] = useState("rojo");
+  const [inputCheckbox, setInputCheckbox] = useState(false);
+  const [newTime, setNewTime]= useState(0);
+  const [timeChanged,setTimeChanged] = useState(false);
+  const [idPedidoTimeChanged,setIdPedidoTimeChanged] = useState([]);
+  const [pedidos,setPedidos] = useState([]);
+
+  const handleFiltroChange = (color, pedidosUsers) => {
     // Aplicar el filtro
     switch (color) {
-      case 'rojo':
-        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 8));
+      case "rojo":
+        setPedidosFiltrados(
+          pedidosUsers.filter((pedido) => pedido.estado_id === 8)
+        );
         break;
-      case 'verde':
-        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 2));
+      case "verde":
+        setPedidosFiltrados(
+          pedidosUsers.filter((pedido) => pedido.estado_id === 2)
+        );
         break;
-      case 'naranja':
-        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 1));
+      case "naranja":
+        setPedidosFiltrados(
+          pedidosUsers.filter((pedido) => pedido.estado_id === 1)
+        );
         break;
-      case 'indigo':
-        setPedidosFiltrados(pedidosUsers.filter(pedido => pedido.estado_id === 12));
+      case "indigo":
+        setPedidosFiltrados(
+          pedidosUsers.filter((pedido) => pedido.estado_id === 12)
+        );
         break;
       default:
+      
         setPedidosFiltrados(pedidosUsers);
     }
   };
 
-    const handleClickChangeCheckbox = () => {
-   
+  const handleClickChangeCheckbox = () => {
     setInputCheckbox(!inputCheckbox);
-   
   };
-
 
   const handleClickModal = () => {
     setModal(!modal);
@@ -69,16 +80,15 @@ const AdminProvider = ({ children }) => {
   const handleClickModalOrderMod = () => {
     setModalOrdersMod(!modalOrdersMod);
   };
-  const handleClickModalOrderDrogMod= () => {
+  const handleClickModalOrderDrogMod = () => {
+    setModalOrdersDrogMod(!modalOrdersDrogMod);
+  };
 
-    setModalOrdersDrogMod(!modalOrdersDrogMod)
-  }
-  
   const handleClickModalOrdersDetails = () => {
     setModalOrdersDetails(!modalOrdersDetails);
   };
   const handleSetPedidosUsers = (pedidosUsersView) => {
-    setPedidosUserView(pedidosUsersView);
+    setPedidosUsersView(pedidosUsersView);
   };
 
   const handleSetPedidosUsersMod = (pedidosUsersMod) => {
@@ -89,7 +99,7 @@ const AdminProvider = ({ children }) => {
     setArticulos(articulos);
   };
 
-    const handleSetArticulosDrog = (articulos) => {
+  const handleSetArticulosDrog = (articulos) => {
     setArticulosDrog(articulos);
   };
   const handleSetUser = (usersEdit) => {
@@ -104,6 +114,14 @@ const AdminProvider = ({ children }) => {
     // Actualizar la interfaz de usuario si es necesario
   };
 
+    const HandleSetTimeChanged = (time) => {
+    setTimeChanged(time);
+  };
+
+    const HandleSetIdPedidoTimeChanged = (id) => {
+    setIdPedidoTimeChanged(id);
+  };
+
   const handleSetItemsUsers = (itemsUsers) => {
     setItemsUsers(itemsUsers);
   };
@@ -115,15 +133,16 @@ const AdminProvider = ({ children }) => {
     setIdsArticulosInOrders(ids);
   };
 
-    const handleSetArticulosDrogInOrders = (idsArticulosDrogInOrders) => {
+  const handleSetArticulosDrogInOrders = (idsArticulosDrogInOrders) => {
     const ids = JSON.parse(idsArticulosDrogInOrders).map(
       (item) => item.articulo_id
     );
     setIdsArticulosDrogInOrders(ids);
-;
   };
 
-
+  const handleSetNewTime= (newTime) => {
+    setNewTime(newTime);
+  };
   const handleDeleteProductOrders = async (id, items) => {
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
@@ -165,13 +184,12 @@ const AdminProvider = ({ children }) => {
   };
 
   const handleClickSavePedido = async () => {
-  
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
       const id = pedidosUsersView.id;
       const response = await clienteAxios.put(
         `/api/adminPharmacies/orders/save/${pedidosUsersView.id}`,
-        { id,estado_id:1 },
+        { id, estado_id: 1 },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -179,102 +197,107 @@ const AdminProvider = ({ children }) => {
         }
       );
 
-        toast.success('Pedido usuario aceptado correctamente.')
-        handleClickModalOrderMod(!modalOrdersMod)
-        
-       
-      if(inputCheckbox){
+      toast.success("Pedido usuario aceptado correctamente.");
+      handleClickModalOrderMod(!modalOrdersMod);
 
-      handleClickSavePedidoDrog()
-
-      }else{
-
+      if (inputCheckbox) {
+        handleClickSavePedidoDrog();
+      } else {
         handleClickModalOrderDrogMod();
       }
-              
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
   };
 
-    const handleClickSavePedidoDrog = async () => {
 
+
+  const handleClickSavePedidoDrog = async () => {
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
       const id = pedidosUsersView.id;
-      const response = await clienteAxios.post('/api/adminPharmacies/ordersDrogueria/save',
-        { 
+      const response = await clienteAxios.post(
+        "/api/adminPharmacies/ordersDrogueria/save",
+        {
           id,
-        articulos:articulos,
-        cantitems:articulos.length,
-        cliente_id:pedidosUsersView.pharmacies_id},
+          articulos: articulos,
+          cantitems: articulos.length,
+          cliente_id: pedidosUsersView.pharmacies_id,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-               
-      if(!inputCheckbox){
-    handleClickModalOrderDrogMod();
+
+      if (!inputCheckbox) {
+        handleClickModalOrderDrogMod();
       }
 
       toast.success("Pedido solicitado a Drogueria. ");
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
-    
   };
- const handleClickCancelPedido = async () => {
-
+  const handleClickCancelPedido = async () => {
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
       const id = pedidosUsersView.id;
       const response = await clienteAxios.put(
         `/api/adminPharmacies/orders/save/${pedidosUsersView.id}`,
-        { id,
-        estado_id:0 },
+        { id, estado_id: 0 },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-    handleClickModalOrderMod();
-
+      handleClickModalOrderMod();
 
       toast.success("Pedido Cancelado. ");
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
-    
   };
 
-   const handleClickEstadoPedido = async (estado,time) => {
 
+ const updatePedidoTime = (pedidoId, nuevoTiempo,pedidosUsers) => {
+
+    const pedidosActualizados = pedidosUsers.map(pedido => {
+      if (pedido.id === pedidoId) {
+        return { ...pedido, time: nuevoTiempo };
+      }
+      return pedido;
+    });
+setPedidosFiltrados(pedidosActualizados);
+  
+  };
+   
+  const handleClickEstadoPedido = async (estado, time, valor) => {
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
       const id = pedidosUsersView.id;
       const response = await clienteAxios.put(
         `/api/adminPharmacies/orders/save/${pedidosUsersView.id}`,
-        { id,
-        estado_id:estado,
-        time:time
-         },
+        { id, estado_id: estado, time: time },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-    handleClickModalOrderMod();
+      handleClickModalOrderMod();
+      mutate('/api/adminPharmacies/orders');
 
-
-      toast.success("Pedido Cancelado. ");
+      if (valor) {
+        toast.warning("El Pedido ha sido Removido por no cumplir con tiempo requerido. ");
+      } else {
+ 
+      }
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
-    
   };
   return (
     <AdminContext.Provider
@@ -296,7 +319,7 @@ const AdminProvider = ({ children }) => {
         handleClickModalPedidosUsers,
         modalPedidosUsers,
         handleSetPedidosUsers,
-        setPedidosUserView,
+        setPedidosUsersView,
         pedidosUsersView,
         idsArticulosInOrders,
         handleSetArticulosInOrders,
@@ -320,7 +343,7 @@ const AdminProvider = ({ children }) => {
         HandlesetItemsMod,
         handleClickSavePedido,
         handleClickSavePedidoDrog,
-        pedidosFiltrados, 
+        pedidosFiltrados,
         setPedidosFiltrados,
         handleFiltroChange,
         color,
@@ -339,6 +362,13 @@ const AdminProvider = ({ children }) => {
         setArticulosDrog,
         articulosDrog,
         handleClickEstadoPedido,
+        timeChanged,
+        HandleSetTimeChanged,
+        idPedidoTimeChanged,
+        HandleSetIdPedidoTimeChanged,
+        newTime,
+        setNewTime,
+        handleSetNewTime
       }}
     >
       {children}

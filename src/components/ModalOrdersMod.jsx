@@ -20,19 +20,23 @@ export default function ModalOrdersMod() {
    inputCheckbox,
    handleClickChangeCheckbox,
    handleClickCancelPedido,
-   handleClickEstadoPedido
+   handleClickEstadoPedido,
+   handleSetNewTime,
+   HandleSetTimeChanged, 
+   HandleSetIdPedidoTimeChanged,
 
   } = useAdmin();
 
 
 
   const [solicitudEnviada, setSolicitudEnviada,] = useState(false); // Estado para controlar si la solicitud ya ha sido enviada
-   const item = JSON.parse(pedidosUsersView.items);
+  const item = JSON.parse(pedidosUsersView.items);
+  const time = pedidosUsersView.time;
+  const [timet, setItemt] = useState(time);
   const [items,setItems] = useState(item);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]); 
-
-  const [elapsedTime, setElapsedTime] = useState(pedidosUsersView.time); // Tiempo transcurrido en segundos
+  const [elapsedTime, setElapsedTime] = useState(timet); // Tiempo transcurrido en segundos
   const [timer, setTimer] = useState(null); 
 
  const handleCancel = () => {
@@ -101,8 +105,9 @@ const handleDeleteItem = (articulo_id) => {
     setItemsMod(ItemsActualizado)
 };
  const updateState = () => {
-  handleClickEstadoPedido(15,0);
+  handleClickEstadoPedido(15,0,true);
   };
+  
 const handleAddProducto = (productoData,productoDataArt )=> {
 
  if (articulos.some((articulosState) => articulosState.articulo_id === productoDataArt.articulo_id)) {
@@ -141,6 +146,9 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
     // Inicia el temporizador
     const newTimer = setInterval(() => {
       setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+      handleSetNewTime((prevElapsedTime) => prevElapsedTime + 1);
+      HandleSetTimeChanged(true);
+      HandleSetIdPedidoTimeChanged(pedidosUsersView.id);
     }, 1000); // Intervalo de 1 segundo
      
     // Inicia la alerta cuando hayan pasado los 5 minutos
@@ -159,7 +167,11 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
     }
           if(elapsedTime >= 500){
           handleClickModalOrderMod(); 
+          HandleSetTimeChanged(false);
+          HandleSetIdPedidoTimeChanged(null);
+          handleSetNewTime(0);
           updateState(); //
+          
           return () => clearInterval(newTimer);
            }
 
@@ -179,7 +191,7 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
 
 const handleButtonClick = () => {
   handleClickModalOrderMod();
-  handleClickEstadoPedido(1,elapsedTime);
+  handleClickEstadoPedido(8,elapsedTime,false);
 };
   return (
     <div>
