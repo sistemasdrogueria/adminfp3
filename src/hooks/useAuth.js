@@ -7,20 +7,21 @@ export const useAuth = ({middleware, url })=> {
 
 const token = localStorage.getItem('AUTH_TOKEN')
 const navigate = useNavigate();
-const {data: user , error, mutate } = useSWR('/api/user', () => 
-clienteAxios('/api/user',
-{
-    headers:{
-        Authorization:`Bearer ${token}`
-    }
-})
-.then(res => res.data)
-.catch(error =>{
-    throw Error(error?.response?.data?.errors)
-}
-)
+const { data: user, error, mutate } = useSWR(
+    token ? '/api/user' : null,
+    () =>
+      clienteAxios('/api/user', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.data)
+        .catch((error) => {
+          throw Error(error?.response?.data?.errors);
+        })
+  );
 
-)
+  const isLoading = !user && !error;
 
 const login = async (datos, setErrores) => {
  try {
@@ -66,6 +67,10 @@ try {
 
     useEffect(() => {
 
+           if (isLoading) {
+      return; // Evita redirecciones prematuras mientras se está cargando
+    }
+
          if (!user) {
         navigate('/auth/login');
     } else {
@@ -73,14 +78,16 @@ try {
             navigate('/admin');
         }
         if (middleware === 'adminfarmacia' && user && parseInt(user.type_id) === 3) {
-            navigate('/admin/farmacia');
+           if (!window.location.pathname.startsWith('/admin/farmacia')) {
+                navigate('/admin/farmacia');
+            }
         }
         if (middleware === 'auth' && error) {
            
             navigate('/auth/login');
         }
     }
-    }, [middleware, user, error, navigate]);
+    }, [middleware, user, error, navigate,isLoading]);
 
 return {
     login,
