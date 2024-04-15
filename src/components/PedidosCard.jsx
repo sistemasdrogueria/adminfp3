@@ -1,7 +1,16 @@
 import useAdmin from "../hooks/useAdmin"
 export default function PedidosCard({pedidos}) {
 const {handleClickModalPedidosUsers,handleSetPedidosUsers,handleSetArticulosInOrders,} = useAdmin();
-
+     const fetcher = () => clienteAxios('/api/adminPharmacies/orders',
+{
+    headers:{
+        Authorization:`Bearer ${token}`
+    }
+}).then(data => data.data);
+  
+  const { data, error, isLoading } = useSWR('/api/adminPharmacies/orders', fetcher,{ refreshInterval: 300000 })
+  if(isLoading) return 'Cargando...';
+    const pedidosUsers =data.data ;
   return (
    <div className="w-full sm:w-1/2 lg:w-1/3 p-4">
         <div className="max-w-md mx-auto border bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">

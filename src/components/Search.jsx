@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-export default function Search({ onSearch }) {
+export default function Search({ onSearch,title }) {
 
     
 
@@ -16,7 +16,7 @@ export default function Search({ onSearch }) {
   return (
         <div>
         <div className='rounded border'> 
-         <h1 className="text-3xl font-black text-center">Buscar Ordenes </h1>
+         <h1 className="text-3xl font-black text-center">{title} </h1>
    <form onSubmit={handleSearch} className="p-4 bg-gray-100 rounded-md">
       <div className=" flex justify-around gap-2 mt-5">
         <div>

@@ -14,7 +14,7 @@ export default function MenuFarmacia() {
     };
   return (
   <div className="bg-white shadow-lg">
-            <h3 className='font-bold px-8 text-lg text-center py-4 rounded-lg border  border-gray-200'>Hola {user?user.name:""}</h3>
+            <h3 className='font-bold px-8 text-lg text-center py-4 rounded-lg border  border-gray-100'>Hola {user?user.name:""}</h3>
                <nav className='flex flex-col p-6 space-y-2 border text-center rounded-lg'>
                 <Link to="/admin/farmacia/ordersUsers" className={`hover:bg-blue-400 hover:rounded-lg ${linkStyle("/admin/farmacia/ordersUsers")}`}>Ordenes Usuarios</Link>
                 <Link to="/admin/farmacia/ordersDrogueria" className={`hover:bg-blue-400 hover:rounded-lg  ${linkStyle("/admin/farmacia/ordersDrogueria")}`}>Ordenes Drogueria</Link>

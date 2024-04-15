@@ -8,7 +8,8 @@ import Search from '../components/Search';
 
 
 
-export default function OrdersUsers() {const token = localStorage.getItem('AUTH_TOKEN')
+export default function OrdersUsers() {
+  const token = localStorage.getItem('AUTH_TOKEN')
    const {pedidosFiltrados,setPedidosFiltrados,handleSetPedidos,pedidos,} = useAdmin();
 
    
@@ -30,7 +31,7 @@ export default function OrdersUsers() {const token = localStorage.getItem('AUTH_
       (pedido.users.name && pedido.users.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pedido.users.lastname && pedido.users.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pedido.users.email && pedido.users.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      // Suponiendo que pedido.id es un string, de lo contrario debes convertirlo a string
+     
       pedido.id && pedido.id.toString().toLowerCase().includes(searchTerm.toLowerCase())) &&
       (!startDate || new Date(pedido.created_at) >= new Date(startDate)) &&
       (!endDate || new Date(pedido.created_at) <= new Date(endDate))
@@ -41,9 +42,9 @@ export default function OrdersUsers() {const token = localStorage.getItem('AUTH_
 
   return (
     <div className="flex flex-col w-full sm:w-auto" >
-         <Search onSearch={handleSearch} />
+         <Search onSearch={handleSearch} title="Buscar Ordenes Usuarios" />
 <div className='rounded border mt-2'>
-             <div> <h1 className="text-3xl mt-4 font-black text-center"> Resultado de Ordenes </h1>
+             <div> <h1 className="text-3xl mt-4 font-black text-center">Ordenes de Usuarios </h1>
         </div>
         
         <div className="md:flex w-full md:justify-around p-10 sm:grid grid-cols-2">
