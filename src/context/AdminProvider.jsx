@@ -21,6 +21,8 @@ const AdminProvider = ({ children }) => {
   const [pedidosUsersMod, setPedidosUsersMod] = useState([]);
   const [pedidosUsersView, setPedidosUsersView] = useState([]);
   const [pedidosDrogView, setPedidosDrogView] = useState([]);
+  const [originalPedidosUsers, setOriginalPedidosUsers]= useState([]);
+  const [originalPedidosDrog, setOriginalPedidosDrog]= useState([]);
   const [idsArticulosInOrders, setIdsArticulosInOrders] = useState([]);
   const [idsArticulosDrogInOrders, setIdsArticulosDrogInOrders] = useState([]);
   const [itemsUsers, setItemsUsers] = useState([]);
@@ -28,12 +30,14 @@ const AdminProvider = ({ children }) => {
   const [articulosDrog, setArticulosDrog] = useState([]);
   const [itemsMod, setItemsMod] = useState([]);
   const [pedidosFiltrados, setPedidosFiltrados] = useState([]);
+  const [pedidosDrogFiltrados, setPedidosDrogFiltrados] = useState([]);
   const [color, setColor] = useState("rojo");
+  const [estado, setEstado] = useState(1);
   const [inputCheckbox, setInputCheckbox] = useState(false);
   const [newTime, setNewTime]= useState(0);
   const [timeChanged,setTimeChanged] = useState(false);
   const [idPedidoTimeChanged,setIdPedidoTimeChanged] = useState([]);
-  const [pedidos,setPedidos] = useState([]);
+
 
   const handleFiltroChange = (color, pedidosUsers) => {
     // Aplicar el filtro
@@ -63,6 +67,43 @@ const AdminProvider = ({ children }) => {
         setPedidosFiltrados(pedidosUsers);
     }
   };
+  const handleDrogFiltroChange = (estado, pedidosUsers) => {
+  let filtrados = [];
+
+  // Aplicar el filtro
+  switch (estado) {
+    case 1:
+      filtrados = pedidosUsers.filter((pedido) => pedido.estado_id === 1);
+      break;
+    case 2:
+      filtrados = pedidosUsers.filter((pedido) => pedido.estado_id === 2);
+      break;
+    case 3:
+      filtrados = pedidosUsers.filter((pedido) => pedido.estado_id === 3);
+      break;
+    case 4:
+      filtrados = pedidosUsers.filter((pedido) => pedido.estado_id === 4);
+      break;
+    case 5:
+      filtrados = pedidosUsers.filter((pedido) => pedido.estado_id === 5);
+      break;
+    case 6:
+      filtrados = pedidosUsers.filter((pedido) => pedido.estado_id === 6);
+      break;
+    default:
+      filtrados = pedidosUsers;
+  }
+
+  // Verificar si hay resultados después de aplicar el filtro
+  if (filtrados.length === 0) {
+    // Establecer un mensaje o un array vacío en caso de que no haya resultados
+    setPedidosDrogFiltrados([]);
+    setOriginalPedidosDrog([]);
+  } else {
+    // Establecer los resultados filtrados
+    setPedidosDrogFiltrados(filtrados);
+  }
+};
 
   const handleClickChangeCheckbox = () => {
     setInputCheckbox(!inputCheckbox);
@@ -359,7 +400,12 @@ setPedidosFiltrados(pedidosActualizados);
         handleClickSavePedidoDrog,
         pedidosFiltrados,
         setPedidosFiltrados,
+        pedidosDrogFiltrados,
+        setPedidosDrogFiltrados,
         handleFiltroChange,
+        handleDrogFiltroChange,
+        estado,
+        setEstado,
         color,
         setColor,
         inputCheckbox,
@@ -384,7 +430,11 @@ setPedidosFiltrados(pedidosActualizados);
         HandleSetIdPedidoTimeChanged,
         newTime,
         setNewTime,
-        handleSetNewTime
+        handleSetNewTime,
+        originalPedidosUsers,
+        setOriginalPedidosUsers,
+        originalPedidosDrog,
+        setOriginalPedidosDrog
       }}
     >
       {children}

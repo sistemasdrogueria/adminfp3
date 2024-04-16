@@ -3,10 +3,11 @@ import useSWR, { mutate } from 'swr';
 import clienteAxios from "../config/axios";
 import useAdmin    from "../hooks/useAdmin";
 import PedidosCardDrogMod from "../components/PedidosCardDrogMod";
+import FiltroDrog from "../components/FiltroDrog";
 
 
 export default function OrdersDrogueria() {
- const {pedidosFiltrados,setPedidosFiltrados,handleSetPedidos,pedidos,} = useAdmin();
+ const {pedidosDrogFiltrados,setPedidosDrogFiltrados,originalPedidosDrog, setOriginalPedidosDrog} = useAdmin();
     const token = localStorage.getItem('AUTH_TOKEN')
 
     const title= "Buscar Ordenes Drogueria";
@@ -21,10 +22,9 @@ export default function OrdersDrogueria() {
   if(isLoading) return 'Cargando...';
     const pedidosUsers =data.data ;
 
-
    const handleSearch = (searchData) => {
     const { searchTerm, startDate, endDate } = searchData;
-    console.log(pedidosUsers);
+
     const filteredPedidos = pedidosUsers.filter(pedido =>
       (pedido.orders.users.name && pedido.orders.users.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pedido.orders.users.lastname && pedido.orders.users.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -35,7 +35,7 @@ export default function OrdersDrogueria() {
       (!endDate || new Date(pedido.created_at) <= new Date(endDate))
     );
       
-    setPedidosFiltrados(filteredPedidos);
+    setPedidosDrogFiltrados(filteredPedidos);
 };
 
    
@@ -48,19 +48,13 @@ export default function OrdersDrogueria() {
          onSearch={handleSearch}
         title="Buscar Ordenes Drogueria"/>
 
-        <div>
-
-          filtro: 
-          <ul>
-            <li>Recibido</li>
-             <li>A facturar</li>
-              <li>Facturado</li>
-               <li>A enviar</li>
-               <li>Enviado</li>
-                 <li>Anulado</li>
-               <li></li>
-          </ul>
-        </div>
+        
+<div className="md:flex w-full md:justify-around p-10 sm:grid grid-cols-2">
+        <h3 className="text-2xl">Filtrar por :</h3>
+      <FiltroDrog pedidosUsers={pedidosUsers} />
+      </div>
+        
+       
 <div className='rounded border mt-2'>
              <div> <h1 className="text-3xl mt-4 font-black text-center"> Resultado de Ordenes drogueria </h1>
         </div>
@@ -74,15 +68,16 @@ export default function OrdersDrogueria() {
         <div className="w-full">
   <div className="flex flex-wrap justify-center">
   
-   {pedidosFiltrados.length > 0 ? (
-  pedidosFiltrados.map(pedido => ( 
+   {
+   pedidosDrogFiltrados.length > 0 ? (
+  pedidosDrogFiltrados.map(pedido => ( 
     <PedidosCardDrogMod
       key={pedido.id}
       pedidos={pedido}
       pedidoKey={pedido.id} 
     />
   ))
-) : (
+) : pedidosUsers.length > 0 && originalPedidosDrog.length > 0 ?(
   pedidosUsers.map(pedido => ( 
     <PedidosCardDrogMod
       key={pedido.id}
@@ -90,7 +85,12 @@ export default function OrdersDrogueria() {
       pedidoKey={pedido.id}
     />
   ))
-)}
+): (
+<div className="text-center text-gray-500 py-8">
+  <h2 className="text-2xl font-semibold">Sin resultados</h2>
+  <p className="mt-2 text-lg">No se encontraron pedidos que coincidan con la búsqueda.</p>
+</div>
+   )}
   </div>
 </div>
        </div>
