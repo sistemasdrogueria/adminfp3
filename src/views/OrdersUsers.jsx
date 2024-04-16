@@ -26,7 +26,7 @@ export default function OrdersUsers() {
 
  const handleSearch = (searchData) => {
     const { searchTerm, startDate, endDate } = searchData;
-    console.log(searchData);
+   
     const filteredPedidos = pedidosUsers.filter(pedido =>
       (pedido.users.name && pedido.users.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pedido.users.lastname && pedido.users.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -36,7 +36,7 @@ export default function OrdersUsers() {
       (!startDate || new Date(pedido.created_at) >= new Date(startDate)) &&
       (!endDate || new Date(pedido.created_at) <= new Date(endDate))
     );
-      console.log(filteredPedidos)
+      
     setPedidosFiltrados(filteredPedidos);
 };
 

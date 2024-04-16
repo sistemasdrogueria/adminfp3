@@ -17,8 +17,10 @@ const AdminProvider = ({ children }) => {
   const [modalOrdersMod, setModalOrdersMod] = useState(false);
   const [modalOrdersDrogMod, setModalOrdersDrogMod] = useState(false);
   const [modalOrdersDetails, setModalOrdersDetails] = useState(false);
+  const [modalOrdersDrogDetails, setModalOrdersDrogDetails] = useState(false);
   const [pedidosUsersMod, setPedidosUsersMod] = useState([]);
   const [pedidosUsersView, setPedidosUsersView] = useState([]);
+  const [pedidosDrogView, setPedidosDrogView] = useState([]);
   const [idsArticulosInOrders, setIdsArticulosInOrders] = useState([]);
   const [idsArticulosDrogInOrders, setIdsArticulosDrogInOrders] = useState([]);
   const [itemsUsers, setItemsUsers] = useState([]);
@@ -87,8 +89,18 @@ const AdminProvider = ({ children }) => {
   const handleClickModalOrdersDetails = () => {
     setModalOrdersDetails(!modalOrdersDetails);
   };
+
+  
+  
+  const handleClickModalOrdersDrogDetails = () => {
+    setModalOrdersDrogDetails(!modalOrdersDrogDetails);
+  };
   const handleSetPedidosUsers = (pedidosUsersView) => {
     setPedidosUsersView(pedidosUsersView);
+  };
+
+    const handleSetPedidosDrogView = (pedidosDrogView) => {
+    setPedidosDrogView(pedidosDrogView);
   };
 
   const handleSetPedidosUsersMod = (pedidosUsersMod) => {
@@ -319,6 +331,8 @@ setPedidosFiltrados(pedidosActualizados);
         handleClickModalPedidosUsers,
         modalPedidosUsers,
         handleSetPedidosUsers,
+        handleSetPedidosDrogView,
+        pedidosDrogView,
         setPedidosUsersView,
         pedidosUsersView,
         idsArticulosInOrders,
@@ -353,7 +367,9 @@ setPedidosFiltrados(pedidosActualizados);
         handleClickChangeCheckbox,
         handleClickCancelPedido,
         handleClickModalOrdersDetails,
+        handleClickModalOrdersDrogDetails,
         modalOrdersDetails,
+        modalOrdersDrogDetails,
         setModalOrdersDetails,
         handleSetArticulosDrogInOrders,
         setIdsArticulosDrogInOrders,
