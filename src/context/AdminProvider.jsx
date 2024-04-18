@@ -40,26 +40,27 @@ const AdminProvider = ({ children }) => {
 
 
   const handleFiltroChange = (color, pedidosUsers) => {
+    let filtrados = [];
     // Aplicar el filtro
     switch (color) {
       case "rojo":
         setPedidosFiltrados(
-          pedidosUsers.filter((pedido) => pedido.estado_id === 8)
+          filtrados =pedidosUsers.filter((pedido) => pedido.estado_id === 8)
         );
         break;
       case "verde":
         setPedidosFiltrados(
-          pedidosUsers.filter((pedido) => pedido.estado_id === 2)
+          filtrados =pedidosUsers.filter((pedido) => pedido.estado_id === 2)
         );
         break;
       case "naranja":
         setPedidosFiltrados(
-          pedidosUsers.filter((pedido) => pedido.estado_id === 1)
+         filtrados = pedidosUsers.filter((pedido) => pedido.estado_id === 1)
         );
         break;
       case "indigo":
         setPedidosFiltrados(
-          pedidosUsers.filter((pedido) => pedido.estado_id === 12)
+          filtrados =pedidosUsers.filter((pedido) => pedido.estado_id === 12)
         );
         break;
       default:
