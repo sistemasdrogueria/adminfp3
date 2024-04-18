@@ -3,14 +3,14 @@ import AccordionItem from './AccordionItem'
 import FormularioFarmacia from './FormularioFarmacia'
 import FormularioFechasTrabajo from './FormularioFechasTrabajo'
 
-export default function AccordionPerfile() {
+export default function AccordionPerfile({pharmacies}) {
   return (
     <div className="w-full mt-2 bg-white shadow-lg rounded-lg">
       <AccordionItem title="Editar Datos del Cliente">
-       <FormularioFarmacia/>
+       <FormularioFarmacia pharmacies={pharmacies}/>
       </AccordionItem>
       <AccordionItem title="Editar los Días de Trabajo de la Farmacia">
-        <FormularioFechasTrabajo/>
+        <FormularioFechasTrabajo pharmacies={pharmacies}/>
       </AccordionItem>
       <AccordionItem title="Obras Sociales">
         <p>Administrar las obras sociales aceptadas.</p>
