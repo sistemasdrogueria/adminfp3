@@ -57,7 +57,8 @@ try {
     })
     
     localStorage.removeItem('AUTH_TOKEN')
-     await mutate(undefined)
+       await mutate(undefined, false);
+        navigate('/auth/login'); 
 } catch (error) {
     throw Error(error?.response?.data?.errors)
     
@@ -70,7 +71,7 @@ try {
            if (isLoading) {
       return; // Evita redirecciones prematuras mientras se está cargando
     }
-
+      console.log(user);
          if (!user) {
         navigate('/auth/login');
     } else {
@@ -94,5 +95,5 @@ return {
     logout,
     user,error
 }
-console.log(user)
+
 }

@@ -340,9 +340,10 @@ setPedidosFiltrados(pedidosActualizados);
             Authorization: `Bearer ${token}`,
           },
         }
-      );
-      handleClickModalOrderMod();
+      );  
       mutate('/api/adminPharmacies/orders');
+      handleClickModalOrderMod();
+    
 
       if (valor) {
         toast.warning("El Pedido ha sido Removido por no cumplir con tiempo requerido. ");

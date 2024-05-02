@@ -5,12 +5,12 @@ import useAdmin    from "../hooks/useAdmin";
 import PedidosCardMod from "../components/PedidosCardMod";
 import Filtro from "../components/Filtro";
 import Search from '../components/Search';
-
+import { useEffect } from 'react';
 
 
 export default function OrdersUsers() {
   const token = localStorage.getItem('AUTH_TOKEN')
-   const {pedidosFiltrados,setPedidosFiltrados,handleSetPedidos,pedidos,} = useAdmin();
+   const {pedidosFiltrados,setPedidosFiltrados,handleSetPedidos,pedidos,handleFiltroChange} = useAdmin();
 
    
      const fetcher = () => clienteAxios('/api/adminPharmacies/orders',
@@ -21,8 +21,14 @@ export default function OrdersUsers() {
 }).then(data => data.data);
   
   const { data, error, isLoading } = useSWR('/api/adminPharmacies/orders', fetcher,{ refreshInterval: 300000 })
-  if(isLoading) return 'Cargando...';
-    const pedidosUsers =data.data ;
+
+
+  useEffect(() => {
+     if (data) {
+    handleFiltroChange("rojo",data.data);
+    }
+    // Initially set filteredPedidos to all pedidos
+  }, [data, setPedidosFiltrados]); // Dependency array includes pedidosUsers to update on change
 
  const handleSearch = (searchData) => {
     const { searchTerm, startDate, endDate } = searchData;
@@ -40,6 +46,8 @@ export default function OrdersUsers() {
     setPedidosFiltrados(filteredPedidos);
 };
 
+  if (isLoading) return 'Cargando...';
+  if (error) return 'Error al cargar datos.';
   return (
     <div className="flex flex-col w-full sm:w-auto" >
          <Search onSearch={handleSearch} title="Buscar Ordenes Usuarios" />
@@ -49,7 +57,7 @@ export default function OrdersUsers() {
         
         <div className="md:flex w-full md:justify-around p-10 sm:grid grid-cols-2">
         <h3 className="text-2xl">Filtrar por :</h3>
-      <Filtro  pedidosUsers={pedidosUsers} />
+      <Filtro  pedidosUsers={data?.data || []}  />
       </div>
        
         <div className="w-full">
@@ -67,12 +75,12 @@ export default function OrdersUsers() {
     />
   ))
 ) : (
-  pedidosUsers.map(pedido => ( 
+  (data?.data || []).map(pedido => ( 
     <PedidosCardMod
       key={pedido.id}
       pedidos={pedido}
       pedidoKey={pedido.id}
-      pedidoAll={pedidosUsers} 
+      pedidoAll={data?.data} 
   
     />
   ))

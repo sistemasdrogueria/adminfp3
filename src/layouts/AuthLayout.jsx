@@ -5,7 +5,7 @@ export default function AuthLayout() {
   return (
   <main className="max-w-4xl m-auto mt-10 md:mt-28 flex flex-col md:flex-row items-center">
      
-      <div className="p-10 w-full">
+      <div className="p-10 w-full rounded-lg border">
          <img 
       src="../img/logo_ds.png"
       alt="Imagen de logo"

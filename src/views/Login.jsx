@@ -29,7 +29,7 @@ export default function Login() {
     <>
 
 
-      <div className="bg-white shadow-md rounded-md mt-10 px-5 py-10">
+      <div className="bg-white shadow-md border rounded-lg mt-10 px-10 py-10 flex-col  justify-center">
         <form onSubmit={handleSubmit} noValidate >
              {errores ? errores.map((error,i )=> <Alerta key={i}>{error}</Alerta>) 
                   : null }
@@ -63,15 +63,15 @@ export default function Login() {
                      ref={passwordRef}
                 />
             </div>
-             
+             <div className="text-center">
             <input
             type="submit"
             className="bg-indigo-600 hover:bg-indigo-800
-             text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer"
+             text-white w-72  mt-5 p-3 uppercase font-bold cursor-pointer"
             value="Iniciar sessión"
             />
 
-
+</div>
         </form>
 <nav className="mt-5">
 
