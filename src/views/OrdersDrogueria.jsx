@@ -66,7 +66,7 @@ export default function OrdersDrogueria() {
 
            
         <div className="w-full">
-  <div className="flex flex-wrap justify-center">
+  <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${ pedidosUsers.length > 0 && originalPedidosDrog.length > 0 ?'lg:grid-cols-3':'lg:grid-cols-1'}`}>
   
    {
    pedidosDrogFiltrados.length > 0 ? (
@@ -86,10 +86,12 @@ export default function OrdersDrogueria() {
     />
   ))
 ): (
-<div className="text-center text-gray-500 py-8">
+
+<div className="text-center text-gray-500 py-8 ">
   <h2 className="text-2xl font-semibold">Sin resultados</h2>
   <p className="mt-2 text-lg">No se encontraron pedidos que coincidan con la búsqueda.</p>
 </div>
+
    )}
   </div>
 </div>

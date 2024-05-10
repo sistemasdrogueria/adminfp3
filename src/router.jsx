@@ -117,7 +117,10 @@ const router = createBrowserRouter([
       
     ],
   },
+ 
   
-]);
+],/* {
+    basename: '/adminfp' //
+}*/);
 
 export default router;

@@ -10,7 +10,9 @@ export default function ModalOrdersDetails() {
  const [solicitudEnviada, setSolicitudEnviada,] = useState(false); 
   const [solicitudEnviadaDrog, setSolicitudEnviadaDrog,] = useState(false); 
  const items =     JSON.parse(pedidosUsersView.items);
- const itemsDrog = JSON.parse(pedidosUsersView.orders_drogueria.items);
+const itemsDrog = pedidosUsersView.orders_drogueria && pedidosUsersView.orders_drogueria.items
+  ? JSON.parse(pedidosUsersView.orders_drogueria.items)
+  : {};
 const token = localStorage.getItem('AUTH_TOKEN')
  /*const respuestadrog = clienteAxios.post("api/adminPharmacies/ordersDrogueria/getOrdersDrogueria", {id:pedidosUsersView.id}, {
         headers: {
@@ -129,12 +131,20 @@ useEffect(() => {
         
         <div className="sm:w-full md:w-1/2">
     <h1 className="text-3xl font-black  text-center mb-3  mt-2">Pedido para Drogueria</h1>
-     {articulosDrog.map(articuloDrog => ( 
-    <ResultItemsDrogueria
-      key={articuloDrog.articulo_id}
-      articuloDrog={articuloDrog}
-    />
-  ))}
+      {articulosDrog && articulosDrog.length > 0 ? (
+        articulosDrog.map(articuloDrog => (
+          <ResultItemsDrogueria
+            key={articuloDrog.articulo_id}
+            articuloDrog={articuloDrog}
+          />
+        ))
+      ) : (
+           <div className="p-2  border shadow rounded-lg bg-white m-2">
+      <div className=" h-24 bg-white flex items-center">
+        <p className="text-center w-full">Cancelaste pedido para  droguería.</p>
+        </div>
+          </div>
+      )}
         </div>
 
         </div>

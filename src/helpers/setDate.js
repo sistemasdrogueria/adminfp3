@@ -11,11 +11,11 @@ var mes = fecha.getMonth() + 1; // Los meses son indexados desde 0
 var año = fecha.getFullYear();
 
 // Crear una cadena de fecha formateada
-var fechaFormateada = dia + " de " + obtenerNombreMes(mes) + " de " + año;
+var fechaFormateada = dia + "/" +mes+ "/" + año;
 
 // Función para obtener el nombre del mes
 function obtenerNombreMes(mes) {
-    var nombresMeses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+    var nombresMeses = ["enero", "febrero", "marzo", "abril", "Mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
     return nombresMeses[mes - 1];
 }
 return fechaFormateada;

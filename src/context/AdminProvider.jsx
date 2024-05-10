@@ -294,6 +294,35 @@ const AdminProvider = ({ children }) => {
       console.error("Error fetching search results:", error);
     }
   };
+
+
+    const handleClickCancelPedidoDrog = async () => {
+    try {
+      const token = localStorage.getItem("AUTH_TOKEN");
+      const id = pedidosUsersView.id;
+      
+      const response = await clienteAxios.post(
+        "/api/adminPharmacies/ordersDrogueria/cancel",
+        {
+          id,
+          cliente_id: pedidosUsersView.pharmacies_id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!inputCheckbox) {
+        handleClickModalOrderDrogMod();
+      }
+
+      toast.success("Pedido cancelado a Drogueria. ");
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
   const handleClickCancelPedido = async () => {
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
@@ -416,6 +445,7 @@ setPedidosFiltrados(pedidosActualizados);
         handleClickCancelPedido,
         handleClickModalOrdersDetails,
         handleClickModalOrdersDrogDetails,
+        handleClickCancelPedidoDrog,
         modalOrdersDetails,
         modalOrdersDrogDetails,
         setModalOrdersDetails,

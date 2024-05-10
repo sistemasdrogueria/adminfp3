@@ -55,13 +55,13 @@ export default function OrdersUsers() {
              <div> <h1 className="text-3xl mt-4 font-black text-center">Ordenes de Usuarios </h1>
         </div>
         
-        <div className="md:flex w-full md:justify-around p-10 sm:grid grid-cols-2">
+        <div className=" flex flex-col items-center md:flex w-full md:justify-around p-10 md:flex-row">
         <h3 className="text-2xl">Filtrar por :</h3>
       <Filtro  pedidosUsers={data?.data || []}  />
       </div>
        
         <div className="w-full">
-  <div className="flex flex-wrap justify-center">
+  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
   
    {pedidosFiltrados.length > 0 ? (
   pedidosFiltrados.map(pedido => ( 

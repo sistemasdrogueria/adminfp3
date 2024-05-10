@@ -7,7 +7,7 @@ export default function PedidosCardMod({pedidos,pedidosKey,pedidoAll}) {
   
  
   return (
-<div className={`w-full sm:w-1/2 lg:w-1/3 p-4 ${pedidos.estado_id === 1 ? 'border-orange-500 shadow-green' : pedidos.estado_id === 8 ? 'border-red-500 shadow-red' : ''}`}>
+<div className={`w-full  p-4 ${pedidos.estado_id === 1 ? 'border-orange-500 shadow-green' : pedidos.estado_id === 8 ? 'border-red-500 shadow-red' : ''}`}>
         <div className={`max-w-md mx-auto border  rounded-xl shadow-md overflow-hidden md:max-w-2xl ${pedidos.estado_id === 1 ? ' shadow-green bg-orange-200 ' : pedidos.estado_id === 8 ? 'border-white  shadow-red-300 bg-red-200 '  :pedidos.estado_id === 12 ? 'border-white  shadow-indigo-400 bg-indigo-400 ':'border-white  shadow-green-300 bg-green-200 '}`}>
           <div className="md:flex">
             <div className="md:flex-shrink-0">
@@ -15,7 +15,7 @@ export default function PedidosCardMod({pedidos,pedidosKey,pedidoAll}) {
             </div>
             <div className="p-8">
               <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Pedido #{pedidos.id}</div>
-              <p className="mt-2 text-gray-500">Fecha: <span className="capitalize p-1">{setDate(pedidos.created_at)}</span></p>
+              <p className="mt-2 text-gray-500">Fecha: <span className=" p-1">{setDate(pedidos.created_at)}</span></p>
               <p className="mt-2 text-gray-500">Farmacia:<span className="capitalize p-1">{}</span> </p>
               <p className="mt-2 text-gray-500">Cantidad de items: <span className="capitalize p-1">{JSON.parse(pedidos.items).length}</span> </p>
               <p className="mt-2 text-gray-500">Usuario: <span className="capitalize p-1">{pedidos.users.name}</span></p>
@@ -39,11 +39,15 @@ export default function PedidosCardMod({pedidos,pedidosKey,pedidoAll}) {
                toast.warning("Pedido Cancelado por la drogueria.");
               }else if (pedidos.estado_id== 14){
                toast.warning("Pedido Cancelado por el usuario.");
-              }else if(pedidos.estado_id == 2){
+              }else if(pedidos.estado_id == 2 || pedidos.estado_id == 10 ){
             handleClickModalOrdersDetails();
             handleSetPedidosUsers(pedidos);
             handleSetArticulosInOrders(pedidos.items)
+            if(pedidos.orders_drogueria && pedidos.orders_drogueria .length > 0){
             handleSetArticulosDrogInOrders(pedidos.orders_drogueria.items)
+
+            }
+           
               }else{
 
                 console.log("Hubo un error")
