@@ -24,6 +24,7 @@ export default function ModalOrdersMod() {
    handleSetNewTime,
    HandleSetTimeChanged, 
    HandleSetIdPedidoTimeChanged,
+   handleClickCancelPedidoDrog
 
   } = useAdmin();
 
@@ -289,7 +290,7 @@ Telefono: <a href={`tel:${pedidosUsersView.users.cellphone}`}>{pedidosUsersView.
      <p className="font-black text-md mt-1 text-center"> Precios con iva.</p>
     <div className="flex flex-col justify-between md:flex-row md:justify-center md:w-full  mt-10">
        <div className=" flex m-4 focus:outline-none text-black font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"> 
-  <label className="me-3" htmlFor="sendall"> Pedí lo mismo a Drogueria</label>
+  <label className="me-3" htmlFor="sendall"> Pedir a Drogueria</label>
   < input type="checkbox" onChange={handleClickChangeCheckbox} defaultChecked ={inputCheckbox} id="sendall" />
   </div>
 <button onClick={handleClickSavePedido}type="button" className="sm:w-full md:w-64 m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido Usuario</button>

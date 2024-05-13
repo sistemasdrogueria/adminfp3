@@ -62,11 +62,26 @@ const AdminProvider = ({ children }) => {
         setPedidosFiltrados(
           filtrados =pedidosUsers.filter((pedido) => pedido.estado_id === 12)
         );
+       break;
+         case "blanco":
+
+          filtrados =pedidosUsers;
+
         break;
       default:
-      
-        setPedidosFiltrados(pedidosUsers);
+   
     }
+
+ if (filtrados.length === 0) {
+    // Establecer un mensaje o un array vacío en caso de que no haya resultados
+    setPedidosFiltrados([]);
+    setOriginalPedidosUsers([]);
+  } else {
+    // Establecer los resultados filtrados
+    setOriginalPedidosUsers(filtrados);
+    setPedidosFiltrados(filtrados);
+  }
+
   };
   const handleDrogFiltroChange = (estado, pedidosUsers) => {
   let filtrados = [];
@@ -95,6 +110,7 @@ const AdminProvider = ({ children }) => {
       filtrados = pedidosUsers;
   }
 
+
   // Verificar si hay resultados después de aplicar el filtro
   if (filtrados.length === 0) {
     // Establecer un mensaje o un array vacío en caso de que no haya resultados
@@ -103,6 +119,7 @@ const AdminProvider = ({ children }) => {
   } else {
     // Establecer los resultados filtrados
     setPedidosDrogFiltrados(filtrados);
+    setOriginalPedidosDrog(filtrados);
   }
 };
 
@@ -253,11 +270,14 @@ const AdminProvider = ({ children }) => {
 
       toast.success("Pedido usuario aceptado correctamente.");
       handleClickModalOrderMod(!modalOrdersMod);
-
+ 
       if (inputCheckbox) {
-        handleClickSavePedidoDrog();
-      } else {
+       // handleClickSavePedidoDrog();
         handleClickModalOrderDrogMod();
+      } else {
+        handleClickCancelPedidoDrog();
+             mutate('/api/adminPharmacies/orders');
+        //handleClickModalOrderDrogMod();
       }
     } catch (error) {
       console.error("Error fetching search results:", error);
@@ -286,10 +306,11 @@ const AdminProvider = ({ children }) => {
       );
 
       if (!inputCheckbox) {
-        handleClickModalOrderDrogMod();
+       // handleClickModalOrderDrogMod();
       }
-
+       mutate('/api/adminPharmacies/orders');
       toast.success("Pedido solicitado a Drogueria. ");
+      handleClickModalOrderDrogMod();
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
@@ -314,7 +335,7 @@ const AdminProvider = ({ children }) => {
         }
       );
 
-      if (!inputCheckbox) {
+      if (inputCheckbox) {
         handleClickModalOrderDrogMod();
       }
 

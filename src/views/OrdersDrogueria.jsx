@@ -9,7 +9,7 @@ import FiltroDrog from "../components/FiltroDrog";
 export default function OrdersDrogueria() {
  const {pedidosDrogFiltrados,setPedidosDrogFiltrados,originalPedidosDrog, setOriginalPedidosDrog} = useAdmin();
     const token = localStorage.getItem('AUTH_TOKEN')
-
+console.log(originalPedidosDrog);
     const title= "Buscar Ordenes Drogueria";
      const fetcher = () => clienteAxios('/api/adminPharmacies/ordersDrogueria',
 {
@@ -49,18 +49,18 @@ export default function OrdersDrogueria() {
         title="Buscar Ordenes Drogueria"/>
 
         
-<div className="md:flex w-full md:justify-around p-10 sm:grid grid-cols-2">
-        <h3 className="text-2xl">Filtrar por :</h3>
-      <FiltroDrog pedidosUsers={pedidosUsers} />
-      </div>
+
         
        
 <div className='rounded border mt-2'>
              <div> <h1 className="text-3xl mt-4 font-black text-center"> Resultado de Ordenes drogueria </h1>
         </div>
         
-        <div className="md:flex w-full md:justify-around p-10 sm:grid grid-cols-2">
-       
+        <div className=" flex flex-col items-center md:flex w-full md:justify-around p-10 md:flex-row">
+
+        <h3 className="text-2xl">Filtrar por :</h3>
+      <FiltroDrog pedidosUsers={pedidosUsers} />
+
      
       </div>
 
@@ -93,9 +93,11 @@ export default function OrdersDrogueria() {
 </div>
 
    )}
+   
+  </div>  
   </div>
 </div>
        </div>
-        </div>
+
   )
 }

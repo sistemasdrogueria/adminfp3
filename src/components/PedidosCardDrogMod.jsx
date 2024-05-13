@@ -27,9 +27,9 @@ export default function PedidosCardDrogMod({pedidos,pedidosKey,pedidoAll}) {
 
   const porcentaje = calcularPorcentaje(pedidos.estado_id);
   return (
-   <div className={`w-full ${pedidos.estado_id === 1 ? 'border-orange-500 shadow-green' : pedidos.estado_id === 8 ? 'border-red-500 shadow-red' : ''}`}>
+   <div className={`w-full p-4 ${pedidos.estado_id === 1 ? 'border-orange-500 shadow-green' : pedidos.estado_id === 8 ? 'border-red-500 shadow-red' : ''}`}>
         <div className={`max-w-md mx-auto border  rounded-xl shadow-md overflow-hidden md:max-w-2xl ${pedidos.estado_id === 1 ? 'border-white shadow-green-100 bg-green-100 ' : pedidos.estado_id === 2 ? 'border-white  shadow-green-200 bg-green-200 '  :pedidos.estado_id === 3?'border-white  shadow-green-300 bg-green-300 ':pedidos.estado_id === 4 ? 'border-white shadow-green-400 bg-green-400 ' : pedidos.estado_id === 5 ? 'border-white  shadow-green-500 bg-green-500 ': pedidos.estado_id === 6 ? 'border-white  shadow-danger-300 bg-danger-300': null}`}>
-          <div className="md:flex">
+          <div className="md:flex justify-center">
             <div className="md:flex-shrink-0">
             
             </div>

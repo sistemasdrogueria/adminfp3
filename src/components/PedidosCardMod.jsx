@@ -9,7 +9,7 @@ export default function PedidosCardMod({pedidos,pedidosKey,pedidoAll}) {
   return (
 <div className={`w-full  p-4 ${pedidos.estado_id === 1 ? 'border-orange-500 shadow-green' : pedidos.estado_id === 8 ? 'border-red-500 shadow-red' : ''}`}>
         <div className={`max-w-md mx-auto border  rounded-xl shadow-md overflow-hidden md:max-w-2xl ${pedidos.estado_id === 1 ? ' shadow-green bg-orange-200 ' : pedidos.estado_id === 8 ? 'border-white  shadow-red-300 bg-red-200 '  :pedidos.estado_id === 12 ? 'border-white  shadow-indigo-400 bg-indigo-400 ':'border-white  shadow-green-300 bg-green-200 '}`}>
-          <div className="md:flex">
+          <div className="md:flex justify-center">
             <div className="md:flex-shrink-0">
             
             </div>
@@ -21,7 +21,7 @@ export default function PedidosCardMod({pedidos,pedidosKey,pedidoAll}) {
               <p className="mt-2 text-gray-500">Usuario: <span className="capitalize p-1">{pedidos.users.name}</span></p>
               <p className="mt-2 text-gray-500">Estado:<span className="capitalize  font-bold p-1">{pedidos.estados?pedidos.estados.nombre: ""}</span> </p>
               <div className="mt-4">
-                <button className={`inline-block text-white font-bold py-2 px-4 rounded ${pedidos.estado_id== 8 ?'hover:bg-red-300 shadow-red-300 bg-red-400':(pedidos.estado_id== 1 ? 'hover:bg-orange-300 shadow-orange-300 bg-orange-400':pedidos.estado_id== 12? 'hover:bg-indigo-300 shadow-indigo-500 bg-indigo-600':pedidos.estado_id== 2? 'hover:bg-green-300 shadow-green-300 bg-green-400': pedidos.estado_id== 0?'shadow-indigo-500 bg-indigo-600':null)}`}
+                <button className={`inline-block text-white font-bold py-2 px-4 rounded ${pedidos.estado_id== 8 ?'hover:bg-red-300 shadow-red-300 bg-red-400':(pedidos.estado_id== 1 ? 'hover:bg-orange-300 shadow-orange-300 bg-orange-400':pedidos.estado_id== 12? 'hover:bg-indigo-300 shadow-indigo-500 bg-indigo-600':pedidos.estado_id== 2? 'hover:bg-green-300 shadow-green-300 bg-green-400': pedidos.estado_id== 0?'shadow-indigo-500 bg-indigo-600':pedidos.estado_id== 10? 'hover:bg-green-300 shadow-green-300 bg-green-400': null)}`}
              onClick={() => { 
             
               if(pedidos.estado_id===8){   
