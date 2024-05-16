@@ -9,7 +9,7 @@ import FiltroDrog from "../components/FiltroDrog";
 export default function OrdersDrogueria() {
  const {pedidosDrogFiltrados,setPedidosDrogFiltrados,originalPedidosDrog, setOriginalPedidosDrog} = useAdmin();
     const token = localStorage.getItem('AUTH_TOKEN')
-console.log(originalPedidosDrog);
+
     const title= "Buscar Ordenes Drogueria";
      const fetcher = () => clienteAxios('/api/adminPharmacies/ordersDrogueria',
 {

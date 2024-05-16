@@ -45,12 +45,12 @@ const AdminProvider = ({ children }) => {
     switch (color) {
       case "rojo":
         setPedidosFiltrados(
-          filtrados =pedidosUsers.filter((pedido) => pedido.estado_id === 8)
+          filtrados =pedidosUsers.filter((pedido) => pedido.estado_id === 8  ||pedido.estado_id === 15)
         );
         break;
       case "verde":
         setPedidosFiltrados(
-          filtrados =pedidosUsers.filter((pedido) => pedido.estado_id === 2)
+          filtrados =pedidosUsers.filter((pedido) => pedido.estado_id === 2 || pedido.estado_id === 10)
         );
         break;
       case "naranja":
@@ -214,6 +214,31 @@ const AdminProvider = ({ children }) => {
   const handleSetNewTime= (newTime) => {
     setNewTime(newTime);
   };
+
+ const handleChangeIdPharmacies = async (id)=> {
+
+   try {
+      const token = localStorage.getItem("AUTH_TOKEN");
+
+      const response = await clienteAxios.put(
+        `/api/adminPharmacies/orders/saveIdPharmacies/${id}`,
+        { id,estado_id:8 },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      mutate('/api/adminPharmacies/orders');
+      mutate('/api/adminPharmacies/ordersDrogueria');
+
+      toast.success("Has tomado este pedido.");
+      handleClickModalOrderMod();
+
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+ }
   const handleDeleteProductOrders = async (id, items) => {
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
@@ -277,6 +302,8 @@ const AdminProvider = ({ children }) => {
       } else {
         handleClickCancelPedidoDrog();
              mutate('/api/adminPharmacies/orders');
+             mutate('/api/adminPharmacies/ordersDrogueria');
+  
         //handleClickModalOrderDrogMod();
       }
     } catch (error) {
@@ -309,6 +336,7 @@ const AdminProvider = ({ children }) => {
        // handleClickModalOrderDrogMod();
       }
        mutate('/api/adminPharmacies/orders');
+       mutate('/api/adminPharmacies/ordersDrogueria');
       toast.success("Pedido solicitado a Drogueria. ");
       handleClickModalOrderDrogMod();
     } catch (error) {
@@ -379,12 +407,19 @@ setPedidosFiltrados(pedidosActualizados);
   };
    
   const handleClickEstadoPedido = async (estado, time, valor) => {
+       if (valor) {
+ var pharmaciesid= null;
+ var varold_pharmacies_id= pedidosUsersView.pharmacies_id;
+       }else{
+ var pharmaciesid= pedidosUsersView.pharmacies_id;
+ var varold_pharmacies_id= null;
+       }
     try {
       const token = localStorage.getItem("AUTH_TOKEN");
       const id = pedidosUsersView.id;
       const response = await clienteAxios.put(
         `/api/adminPharmacies/orders/save/${pedidosUsersView.id}`,
-        { id, estado_id: estado, time: time },
+        { id, estado_id: estado, time: time,pharmacies_id:pharmaciesid,old_pharmacies_id:varold_pharmacies_id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -487,7 +522,8 @@ setPedidosFiltrados(pedidosActualizados);
         originalPedidosUsers,
         setOriginalPedidosUsers,
         originalPedidosDrog,
-        setOriginalPedidosDrog
+        setOriginalPedidosDrog,
+        handleChangeIdPharmacies
       }}
     >
       {children}

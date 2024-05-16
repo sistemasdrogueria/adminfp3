@@ -57,7 +57,7 @@ export default function OrdersUsers() {
              <div> <h1 className="text-3xl mt-4 font-black text-center">Ordenes de Usuarios </h1>
         </div>
         
-        <div className=" flex flex-col items-center md:flex w-full md:justify-around p-10 md:flex-row">
+        <div className=" flex flex-col items-center md:flex-row justify-around p-10 w-full">
         <h3 className="text-2xl">Filtrar por :</h3>
       <Filtro  pedidosUsers={data?.data || []}  />
       </div>

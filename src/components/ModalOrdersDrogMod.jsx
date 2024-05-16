@@ -4,6 +4,7 @@ import clienteAxios from "../config/axios";
 import CardFarmItem from "./CardFarmItem";
 import ResultQuery from "./ResultQuery";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 export default function ModalOrdersDrogMod() {
      const {
     pedidosUsersView,
@@ -118,6 +119,24 @@ setArticulos([...articulos,productoDataArt])
             console.error('Error fetching search results:', error);
         }
   };
+  const handleValidateConfirmation = () => {
+
+    Swal.fire({
+  title: "¿Quieres cancelar el pedido a droguería?",
+  text: "¡No podrás revertir esto!",
+  icon: "warning",
+  showDenyButton:     true,
+  showCancelButton:   false,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor:  "#d33",
+  denyButtonText:     `Cancelar`,
+  confirmButtonText:  "Si, borrar!"
+}).then((result) => {
+  if (result.isConfirmed) {
+      handleClickCancelPedidoDrog();
+  }
+});
+  }
 
   
   return (
@@ -203,7 +222,7 @@ setArticulos([...articulos,productoDataArt])
     <div className="w-full flex justify-center mt-10">
 <button onClick={handleClickSavePedidoDrog}
  type="button" className="m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido Drogueria</button>
-<button onClick={handleClickCancelPedidoDrog} type="button" className="m-4 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancelar Pedido Drogueria</button>
+<button onClick={handleValidateConfirmation} type="button" className="m-4 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancelar Pedido Drogueria</button>
 
     </div>
     </div>

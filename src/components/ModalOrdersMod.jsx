@@ -166,7 +166,8 @@ handleAddProductoPedido(pedidosUsersView.id, [...itemsMod, productoData]);
         
       });
     }
-          if(elapsedTime >= 500){
+
+          if(elapsedTime >= 300){
           handleClickModalOrderMod(); 
           HandleSetTimeChanged(false);
           HandleSetIdPedidoTimeChanged(null);
@@ -194,6 +195,36 @@ const handleButtonClick = () => {
   handleClickModalOrderMod();
   handleClickEstadoPedido(8,elapsedTime,false);
 };
+const handleValidateConditions = () => {
+      if (inputCheckbox) {
+    handleClickSavePedido();
+    
+      }else{
+
+   Swal.fire({
+   title: "",
+   icon: "warning",
+    html: `
+    Está a punto de confirmar el pedido para el cliente, tendrá que preparar el pedido luego de esto.
+  `,
+  showDenyButton: true,
+  showCancelButton: false,
+  confirmButtonText: "Continuar",
+  denyButtonText: `Cancelar`
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    handleClickSavePedido();
+  } else if (result.isDenied) {
+  
+  }
+});
+
+      }
+
+
+  
+}
   return (
     <div>
     <div className="md:w-full  ">
@@ -290,12 +321,12 @@ Telefono: <a href={`tel:${pedidosUsersView.users.cellphone}`}>{pedidosUsersView.
      <p className="font-black text-md mt-1 text-center"> Precios con iva.</p>
     <div className="flex flex-col justify-between md:flex-row md:justify-center md:w-full  mt-10">
        <div className=" flex m-4 focus:outline-none text-black font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"> 
-  <label className="me-3" htmlFor="sendall"> Pedir a Drogueria</label>
+  <label className="me-3" htmlFor="sendall"> + PEDIDO A DROGUERIA</label>
   < input type="checkbox" onChange={handleClickChangeCheckbox} defaultChecked ={inputCheckbox} id="sendall" />
   </div>
-<button onClick={handleClickSavePedido}type="button" className="sm:w-full md:w-64 m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido Usuario</button>
+<button onClick={handleValidateConditions}type="button" className="sm:w-full md:w-64 m-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Confirmar Pedido(Solo Cliente)</button>
 
-<button onClick={handleCancel}         type="button" className="sm:w-full md:w-64 m-4  focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancelar Pedidos</button>
+<button onClick={handleCancel} type="button" className="sm:w-full md:w-64 m-4  focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Cancelar Pedidos</button>
 
     </div>
     </div>

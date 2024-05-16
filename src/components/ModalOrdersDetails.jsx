@@ -13,6 +13,7 @@ export default function ModalOrdersDetails() {
 const itemsDrog = pedidosUsersView.orders_drogueria && pedidosUsersView.orders_drogueria.items
   ? JSON.parse(pedidosUsersView.orders_drogueria.items)
   : {};
+
 const token = localStorage.getItem('AUTH_TOKEN')
  /*const respuestadrog = clienteAxios.post("api/adminPharmacies/ordersDrogueria/getOrdersDrogueria", {id:pedidosUsersView.id}, {
         headers: {
@@ -60,16 +61,22 @@ const token = localStorage.getItem('AUTH_TOKEN')
 
 useEffect(() => {
   async function enviarSolicitudDrog() {
+
     try {
       const ids = { ids: idsArticulosDrogInOrders };
+     
       const token = localStorage.getItem('AUTH_TOKEN')
+
+      if(ids.ids.length > 0 ){
      const respuesta = await clienteAxios.post("api/articulosAdmin", ids, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
+     
       // Filtrar los elementos de items que coinciden con los IDs de la respuesta
+  if(itemsDrog.length > 0 ){
       const articulosFiltrados = itemsDrog.filter((pedidoItem) =>
         respuesta.data.data.some((item) => item.id === pedidoItem.articulo_id)
       );
@@ -83,6 +90,11 @@ useEffect(() => {
       // Establecer los artículos actualizados
       setArticulosDrog(articulosActualizados);
       setItemsMod(JSON.parse(pedidosUsersView.orders_drogueria.items));
+    }else{
+      setArticulosDrog();
+      setItemsMod();
+    }
+      }
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
     }
@@ -94,6 +106,7 @@ useEffect(() => {
     setSolicitudEnviadaDrog(true); // Marcar la solicitud como enviada
   }
 }, [idsArticulosDrogInOrders, solicitudEnviadaDrog]);
+
   return (
     <div>
       <div className="md:w-full  ">
