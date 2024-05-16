@@ -18,7 +18,7 @@ export default function OrdersDrogueria() {
     }
 }).then(data => data.data);
   
-  const { data, error, isLoading } = useSWR('/api/adminPharmacies/ordersDrogueria', fetcher,{ refreshInterval: 300000 })
+  const { data, error, isLoading } = useSWR('/api/adminPharmacies/ordersDrogueria', fetcher,{ refreshInterval: 30000 })
   if(isLoading) return 'Cargando...';
     const pedidosUsers =data.data ;
 

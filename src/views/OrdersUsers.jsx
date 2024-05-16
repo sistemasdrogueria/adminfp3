@@ -20,7 +20,7 @@ export default function OrdersUsers() {
     }
 }).then(data => data.data);
   
-  const { data, error, isLoading } = useSWR('/api/adminPharmacies/orders', fetcher,{ refreshInterval: 300000 })
+  const { data, error, isLoading } = useSWR('/api/adminPharmacies/orders', fetcher,{ refreshInterval: 30000 })
 
 
   useEffect(() => {
